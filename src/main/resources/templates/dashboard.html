@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Learn — Dashboard</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            background: #f0f2f5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        header {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a73e8;
+        }
+
+        .btn-logout {
+            padding: 8px 18px;
+            border: 1.5px solid #dadce0;
+            border-radius: 6px;
+            background: #fff;
+            color: #3c4043;
+            font-size: .875rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background .15s;
+        }
+
+        .btn-logout:hover { background: #f8f9fa; }
+
+        main {
+            display: flex;
+            justify-content: center;
+            padding: 48px 16px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,.10);
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #e8f0fe;
+            margin-bottom: 20px;
+        }
+
+        .avatar-placeholder {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #1a73e8;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: .75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+
+        .email {
+            font-size: .9rem;
+            color: #666;
+            margin-bottom: 32px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .info-row + .info-row { margin-top: 8px; }
+
+        .info-label {
+            font-size: .75rem;
+            color: #888;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            min-width: 60px;
+        }
+
+        .info-value {
+            font-size: .9rem;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <span class="brand">Demo Learn</span>
+    <a href="/logout" class="btn-logout">Sair</a>
+</header>
+
+<main>
+    <div class="card">
+        <img th:if="${picture}" th:src="${picture}" alt="Foto de perfil" class="avatar">
+        <div th:unless="${picture}" class="avatar-placeholder">
+            <span th:text="${name != null ? name.substring(0,1).toUpperCase() : '?'}"></span>
+        </div>
+
+        <div class="badge">Autenticado</div>
+
+        <h1 th:text="${name}">Nome do Usuário</h1>
+        <p class="email" th:text="${email}">email@exemplo.com</p>
+
+        <div class="info-row">
+            <span class="info-label">Nome</span>
+            <span class="info-value" th:text="${name}">—</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Email</span>
+            <span class="info-value" th:text="${email}">—</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Provider</span>
+            <span class="info-value">Google</span>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
