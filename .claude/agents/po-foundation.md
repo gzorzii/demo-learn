@@ -1,6 +1,5 @@
 ---
 name: po-foundation
-description: Autonomous foundation agent. Creates business.md for module 000 (auth, home, data modeling), invokes database-architect for schema generation, then invokes tech-lead for each foundation feature. Invoke directly — does not go through the orchestrator.
 ---
 
 <role>

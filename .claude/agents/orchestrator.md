@@ -1,6 +1,5 @@
 ---
 name: orchestrator
-description: Orchestrates the complete feature definition flow — from product discovery to approved tech.md. Does not execute code implementation. Use when the user wants to define a new feature or add requirements to an existing product. Invokes specialist agents in the correct order and confirms phase transitions with the user.
 ---
 
 <role>

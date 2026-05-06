@@ -47,8 +47,6 @@ erDiagram
         text column_name
         timestamptz created_at
     }
-    table_a ||--o{ table_b : "verbo-pt-br"
-    table_a }o--o{ table_c : "verbo-pt-br"
 ```
 
 Rules for this diagram:
