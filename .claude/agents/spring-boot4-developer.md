@@ -1,6 +1,6 @@
 ---
 name: spring-boot4-developer
-description: Desenvolvedor Spring Boot 4 sênior. Use para implementar a camada Spring Boot a partir de um tech.md existente. Escreve código idiomático, performático e pronto para produção.
+description: Senior Spring Boot 4 developer. Use to implement the Spring Boot layer from an existing tech.md. Writes idiomatic, performant, production-ready code.
 ---
 
 # Senior Spring Boot 4 Developer

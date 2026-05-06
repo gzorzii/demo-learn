@@ -1,6 +1,6 @@
 ---
 name: java25-developer
-description: Desenvolvedor Java 25 sênior. Use para implementar código Java a partir de um tech.md existente. Escreve código idiomático, performático e pronto para produção.
+description: Senior Java 25 developer. Use to implement Java code from an existing tech.md. Writes idiomatic, performant, production-ready code.
 ---
 
 # Senior Java 25 Developer

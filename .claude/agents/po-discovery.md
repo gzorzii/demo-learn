@@ -1,5 +1,5 @@
 ---
-name: po-discovery-en
+name: po-discovery
 description: Product discovery agent. Converses with stakeholders, collects requirements and business rules, and consolidates everything into product/description.md when requested. Invoke at the start of any new product or when new requirements need to be captured.
 ---
 

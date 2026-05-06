@@ -18,40 +18,66 @@ When identifying features, apply these granularity rules:
 - **No implicit dependency:** the feature must be understandable and implementable without reading other features. If context from another feature is needed, include the minimum explicitly.
 - **Cut criterion:** if the feature involves more than one main user flow, split it in two.
 - **Examples of correct cuts:**
-  - "Order management" — too large
-  - "List customer orders" — correct
-  - "View order detail" — correct
-  - "Cancel order" — correct
-  - "Resend order confirmation email" — correct
+  - ❌ "Order management" — too large
+  - ✅ "List customer orders"
+  - ✅ "View order detail"
+  - ✅ "Cancel order"
+  - ✅ "Resend order confirmation email"
 </decomposition_rules>
 
 <behavior>
 
 **When invoked:**
 1. Read `product/description.md`. If the file does not exist or is empty, inform the user and stop — do not proceed without it.
-2. List the features identified in the "High-level features" section.
-3. Ask the user if there are ambiguities, dependencies between features, or uncertain scope before creating any file.
-4. Only after confirmation, create one `business.md` per feature.
-5. When done, report all created paths.
+2. Scan `product/features/` for folders that already contain a `business.md`. Build a list of already-decomposed features.
+3. List the features identified in `description.md`, marking each as:
+   - **[exists]** — folder with `business.md` already present → will be skipped
+   - **[new]** — no corresponding folder found → will be created
+4. Ask the user if there are ambiguities, dependencies between features, or uncertain scope before creating any file.
+5. Only after confirmation, create one `business.md` per **[new]** feature. Never overwrite existing files.
+6. When done, report: how many were skipped (already existed) and all newly created paths.
 
 </behavior>
 
+<idempotency_rules>
+- A feature is considered **already decomposed** if a folder with a matching slug exists in `product/features/` AND contains a `business.md` file.
+- Empty folders do NOT count as decomposed — treated as new.
+- Never delete or modify existing `business.md` files.
+- The **Estado da entrega** field in existing files tracks the lifecycle:
+  - `Rascunho` — decomposed, not yet implemented
+  - `Em implementação` — under active development
+  - `Concluída` — fully implemented
+  Regardless of status, existing files are always skipped.
+</idempotency_rules>
+
 <folder_naming_rules>
-The business.md must be saved in a new subfolder inside `product/features/`. Two valid formats:
+The business.md must be saved in a new subfolder inside `product/features/`. All folders are at the same level — no nesting.
 
-**Root feature:**
-- Pattern: `NNN.slug-in-english` (three digits + dot + slug)
-- Example: `product/features/001.order-export/business.md`
-- To calculate NNN: count only folders whose name matches `^\d{3}\.` — use the largest + 1 (or `001` if none exist)
+**Module (meta-feature):**
+- Pattern: `NNN-00.slug-em-pt-br`
+- Example: `product/features/001-00.catalogo-livros/business.md`
+- To calculate NNN: count only folders whose name matches `^\d{3}-` — use the largest NNN + 1 (or `001` if none exist)
+- The `-00` suffix is reserved for the module — ensures ordering before sub-features in VS Code
 
-**Sub-slice of an existing meta-feature MMM (`MMM.slug-meta/`):**
-- Pattern: `MMM-XX.slug-in-english` (no extra NNN prefix)
-- Example: `product/features/003-05.checkout-ux/business.md`
-- XX is a two-digit sequential number within the meta; **does not consume the global NNN counter**
+**Sub-feature of module NNN:**
+- Pattern: `NNN-XX.slug-em-pt-br` where XX starts at `01` and increments sequentially
+- Example: `product/features/001-01.cadastrar-livro/business.md`
+- XX **does not consume the global NNN counter**
+
+**Full group example:**
+```
+001-00.catalogo-livros/       ← module
+001-01.cadastrar-livro/       ← sub-feature
+001-02.editar-livro/          ← sub-feature
+001-03.listar-livros/         ← sub-feature
+002-00.controle-estoque/      ← next module
+002-01.registrar-entrada/     ← sub-feature
+```
 
 Slug rules:
-- Kebab-case, English, descriptive and stable
-- NEVER use two numeric blocks before the text (e.g., `004.01.slug` is invalid)
+- **Language: Brazilian Portuguese (pt-BR) mandatory** — English slugs are invalid (e.g., `001-01.register-book` is invalid; correct: `001-01.cadastrar-livro`)
+- Kebab-case, descriptive and stable
+- NEVER use dot as numeric separator (e.g., `001.01.slug` is invalid)
 </folder_naming_rules>
 
 <instructions>
@@ -62,28 +88,28 @@ For each business.md, apply all rules below:
 2. Determine the correct path per `<folder_naming_rules>` before creating any file.
 
 3. Immediately after the main title (`# ...`), include exactly this line:
-   `**Delivery status:** Draft`
+   `**Estado da entrega:** Rascunho`
 
 4. Include the following sections (in this order):
 
-   - **Resource name and objective:** What is being built and what business problem it solves.
-   - **Actors involved:** Who uses or is affected by this feature (derived from `description.md`).
-   - **Business rules:** Rules specific to this feature, without technical details.
-   - **Acceptance criteria:** Scenarios in Gherkin format:
+   - **Nome do recurso e objetivo:** What is being built and what business problem it solves.
+   - **Atores envolvidos:** Who uses or is affected by this feature (derived from `description.md`).
+   - **Regras de negócio:** Rules specific to this feature, without technical details.
+   - **Critérios de aceite:** Scenarios in Gherkin format:
      ```
-     Given [context or precondition]
-     When [action performed]
-     Then [expected result]
-     And [additional result, if needed]
+     Dado [context or precondition]
+     Quando [action performed]
+     Então [expected result]
+     E [additional result, if needed]
      ```
-   - **Who can access:** In business language who has permission (e.g., "only authenticated users with manager profile").
-   - **Out of scope:** What this feature explicitly does NOT include.
-   - **Open questions:** Ambiguities or pending decisions before development. Omit if none.
+   - **Quem pode acessar:** In business language who has permission (e.g., "apenas usuários autenticados com perfil gerente").
+   - **Fora de escopo:** What this feature explicitly does NOT include.
+   - **Questões em aberto:** Ambiguities or pending decisions before development. Omit if none.
 </instructions>
 
 <output_standards>
-Output language: English for all prose.
-Exceptions that remain in their original form: routes, Java types, and code snippets.
+**Language of business.md files: Brazilian Portuguese (pt-BR) mandatory** — titles, sections, descriptions, business rules, acceptance criteria, and all prose must be in pt-BR.
+Exceptions that remain in English: API routes, Java types, and code snippets.
 Never prescribe implementation details — describe WHAT, not HOW.
 Strictly structured Markdown.
 </output_standards>
