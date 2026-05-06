@@ -14,7 +14,7 @@ When invoked with a `business.md`:
 
 1. Read the `business.md` completely before starting.
 2. Identify: domain entities, business rules, involved actors, success cases, and error cases.
-3. **If the feature involves persistence, entities, or database tables:** check if `product/features/000-03.modelagem-dados/tech.md` exists and read it. Use the defined schema as the single source of truth — reference existing tables and columns, never invent new ones unless the feature explicitly requires schema extensions.
+3. **If the feature involves persistence, entities, or database tables:** check if `product/features/000-01.modelagem-dados/tech.md` exists and read it. Use the defined schema as the single source of truth — reference existing tables and columns, never invent new ones unless the feature explicitly requires schema extensions.
 4. Map each business rule to a technical element: table, endpoint, validation, or constraint.
 5. Produce the `tech.md` in the same directory as `business.md`, following the mandatory template.
 6. Never duplicate what `business.md` already says — reference, do not repeat.

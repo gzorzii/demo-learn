@@ -24,7 +24,7 @@ The output must serve **two audiences simultaneously**:
 - **Non-technical people** (product owners, stakeholders, managers): need to understand *what* the database stores, *why* each table exists, and how the information relates — without technical jargon.
 - **AIs and developers**: need precise, structured technical elements so other agents (@architect, @backend-developer, @qa-tester) can interpret the output and generate `tech.md`, EF Core entities, migrations, and tests from it.
 
-The output will contain **three mandatory blocks**, in this order:
+The output will contain **two mandatory blocks**, in this order:
 
 ### Bloco 1 — Glossário de dados (linguagem acessível)
 
@@ -35,17 +35,29 @@ For each table/entity, explain in plain language:
 
 Use concrete domain examples to illustrate relationships. Organize as a glossary: entity name followed by a 2–3 sentence description.
 
-### Bloco 2 — Mermaid ER Diagram
+### Bloco 2 — Diagrama ER (Mermaid)
+
+Use `erDiagram`. Each table is an entity box with its columns listed with type, name, and optionally PK/FK markers. Relationships use ERD crow's foot notation with a short Portuguese verb.
 
 ```mermaid
 erDiagram
-    TABLE {
-        type column PK
+    table_name {
+        uuid id PK
+        uuid other_id FK
+        text column_name
+        timestamptz created_at
     }
-    TABLE ||--o{ OTHER : "domain_verb"
+    table_a ||--o{ table_b : "verbo-pt-br"
+    table_a }o--o{ table_c : "verbo-pt-br"
 ```
 
-### Bloco 3 — Diagrama completo de todo o relacionamento entre as tabelas
+Rules for this diagram:
+- List every column of every table with exact PostgreSQL type and `snake_case` name.
+- Mark primary keys with `PK` and foreign keys with `FK`.
+- Use crow's foot notation: `||--o{` for 1:N, `||--||` for 1:1, `}o--o{` for N:N (via junction table), `}o--o|` for N:0..1.
+- Relationship label must be a short Portuguese verb or noun phrase describing the association direction.
+- Include all tables — no table may be omitted from the diagram.
+- Update the section heading in the output to `## Bloco 2 — Diagrama ER (Mermaid)`.
 </output_format>
 
 <conventions>
@@ -60,7 +72,7 @@ erDiagram
 <output_standards>
 Output language: Brazilian Portuguese (pt-BR) for all prose (glossary, explanations, justifications).
 Exceptions that remain in English: table names, column names, constraints, indexes, Mermaid identifiers, and code snippets.
-Produce all three blocks complete and consistent with each other (glossary, diagram, and DDL must reflect exactly the same model).
+Produce both blocks complete and consistent with each other (glossary and diagram must reflect exactly the same model).
 Justify modeling decisions when there are relevant alternatives.
 If the domain is ambiguous at any point, list the assumptions made and ask the user before proceeding.
 </output_standards>

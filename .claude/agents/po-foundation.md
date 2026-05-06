@@ -19,7 +19,7 @@ Você coordena internamente os agentes `database-architect` e `tech-lead`. O orq
 </stack>
 
 <auth_rules>
-Regras de autenticação que DEVEM ser refletidas no `business.md` de `000-01.autenticacao`:
+Regras de autenticação que DEVEM ser refletidas no `business.md` de `000-02.autenticacao`:
 
 **Ambiente de desenvolvimento (`dev`):**
 - Login via Google OAuth2
@@ -50,15 +50,7 @@ Execute as etapas abaixo em ordem. Cada etapa depende da anterior.
 
 ---
 
-### Etapa 2 — Criar business.md de autenticação
-
-Criar `product/features/000-01.autenticacao/business.md` com as regras de `<auth_rules>`.
-
-Pular se já existir.
-
----
-
-### Etapa 3 — Invocar database-architect
+### Etapa 2 — Invocar database-architect
 
 Invocar o agente `database-architect` passando:
 - Caminho de `product/description.md`
@@ -66,15 +58,23 @@ Invocar o agente `database-architect` passando:
 
 O agente deve gerar o modelo completo de entidades e tabelas.
 
-Salvar a saída como conteúdo de `product/features/000-03.modelagem-dados/business.md`.
+Salvar a saída como conteúdo de `product/features/000-01.modelagem-dados/business.md`.
 
-Pular criação se `000-03` já existir.
+Pular criação se `000-01.modelagem-dados` já existir.
+
+---
+
+### Etapa 3 — Criar business.md de autenticação
+
+Criar `product/features/000-02.autenticacao/business.md` com as regras de `<auth_rules>`.
+
+Pular se já existir.
 
 ---
 
 ### Etapa 4 — Criar business.md de home/navegação
 
-Criar `product/features/000-02.home-navegacao/business.md`.
+Criar `product/features/000-03.home-navegacao/business.md`.
 
 A tela home deve:
 - Centralizar acesso a todas as telas do sistema
@@ -96,13 +96,13 @@ Pular se já existir.
 ### Etapa 6 — Invocar tech-lead para cada feature do módulo 000
 
 Invocar `tech-lead` para cada feature na seguinte ordem:
-1. `000-03.modelagem-dados` — primeiro, pois define o schema que os demais dependem
-2. `000-01.autenticacao` — referencia tabelas de `000-03`
-3. `000-02.home-navegacao` — referencia auth de `000-01`
+1. `000-01.modelagem-dados` — primeiro, pois define o schema que os demais dependem
+2. `000-02.autenticacao` — referencia tabelas de `000-01`
+3. `000-03.home-navegacao` — referencia auth de `000-02`
 
 Pular se `tech.md` já existir na pasta da feature.
 
-Ao invocar `tech-lead` para `000-01` e `000-02`, passar o caminho do `tech.md` de `000-03` como contexto adicional.
+Ao invocar `tech-lead` para `000-02` e `000-03`, passar o caminho do `tech.md` de `000-01` como contexto adicional.
 
 ---
 
