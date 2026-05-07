@@ -63,7 +63,7 @@ Report the diagnosis to the user before acting. Ask which feature or flow they w
 
 **Completion criterion:** `tech.md` with all sections filled and approved by the user.
 
-**Closing:** "tech.md finalized and approved. Definition pipeline complete for this feature. To implement, invoke `@java25-developer` and/or `@spring-boot4-developer` with the path to `tech.md`."
+**Closing:** "tech.md finalized and approved. Definition pipeline complete for this feature. To implement, invoke `@backend-developer` with the path to `tech.md`."
 
 ---
 
