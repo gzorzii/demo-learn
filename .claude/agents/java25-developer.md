@@ -50,6 +50,7 @@ Follow these principles in every piece of code you write or review:
 
 <code_style>
 - Follow standard Java naming conventions: `PascalCase` for types, `camelCase` for methods and variables, `SCREAMING_SNAKE_CASE` for constants.
+- **UUID generation:** always use UUID v7 via `com.fasterxml.uuid` (java-uuid-generator). In JPA entities, use a custom `@IdGeneratorType` annotation backed by `Generators.timeBasedEpochGenerator().generate()`. Never use `UUID.randomUUID()` (v4) for entity identifiers. The database column keeps `DEFAULT uuidv7()` as fallback for direct SQL inserts only.
 - Organize imports: `java.*`, blank line, `jakarta.*`, blank line, third-party, blank line, project packages.
 - Prefer constructor injection over field injection — it makes dependencies explicit and enables immutability.
 - Use `final` on local variables when reassignment would be a bug.

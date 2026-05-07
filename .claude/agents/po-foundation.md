@@ -121,15 +121,16 @@ Preencher o arquivo `src/backend/src/main/resources/db/changelog/changes/001-ini
 2. Pular se o `<changeSet id="001-initial-schema">` já contiver conteúdo além de comentários.
 3. Usar formato `<sql>` dentro do changeSet existente — não criar novo changeSet.
 4. Ordem de criação das tabelas deve respeitar dependências de FK (tabelas referenciadas antes das que as referenciam).
-5. Incluir ao final do `<sql>` o seed dos 4 perfis fixos:
+5. **Enums são classes Java — sem tipos ENUM nem CHECK constraint no banco.** Colunas que representam enums devem ser declaradas como `TEXT`. Não usar `CREATE TYPE ... AS ENUM`.
+6. Incluir ao final do `<sql>` o seed dos 4 perfis fixos:
    ```sql
    INSERT INTO role (id, name, description, created_at, updated_at) VALUES
-     (gen_random_uuid(), 'Administrador', 'Acesso total ao sistema', now(), now()),
-     (gen_random_uuid(), 'Gerente',       'Gestão da própria filial', now(), now()),
-     (gen_random_uuid(), 'Catalogador',   'Cadastro e edição de livros', now(), now()),
-     (gen_random_uuid(), 'Caixa',         'Operação do PDV', now(), now());
+     (uuidv7(), 'Administrador', 'Acesso total ao sistema', now(), now()),
+     (uuidv7(), 'Gerente',       'Gestão da própria filial', now(), now()),
+     (uuidv7(), 'Catalogador',   'Cadastro e edição de livros', now(), now()),
+     (uuidv7(), 'Caixa',         'Operação do PDV', now(), now());
    ```
-6. O arquivo XML deve manter o cabeçalho e estrutura originais — apenas substituir o comentário `<!-- Add your initial tables here -->` pelo bloco `<sql>`.
+7. O arquivo XML deve manter o cabeçalho e estrutura originais — apenas substituir o comentário `<!-- Add your initial tables here -->` pelo bloco `<sql>`.
 
 ---
 
