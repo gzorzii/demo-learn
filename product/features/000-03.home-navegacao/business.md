@@ -1,6 +1,6 @@
 # Home e Navegação
 
-**Delivery status:** Draft
+**Delivery status:** Concluído
 
 ## Nome do recurso e objetivo
 

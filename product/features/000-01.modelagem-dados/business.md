@@ -1,6 +1,6 @@
 # Modelagem de Dados
 
-**Delivery status:** Draft
+**Delivery status:** Concluído
 
 ## Nome do recurso e objetivo
 
