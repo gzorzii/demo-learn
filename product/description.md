@@ -79,6 +79,13 @@ Web-based management system for bookstores and used bookstores (sebos). Enables 
 34. A single user can hold multiple profiles simultaneously.
 35. Users belong to a specific branch (except Administrator, who has cross-branch access).
 
+### Authentication
+
+36. Authentication is done exclusively via email — no password and no third-party provider (e.g., Google OAuth).
+37. The user enters their email address; the system sends a one-time magic link valid for a single use and a limited time window.
+38. Upon clicking the magic link, the user is authenticated and redirected to the system.
+39. No account self-registration — only users created by a Manager or Administrator can receive magic links.
+
 ### Shelf time tracking
 
 1. Each book registration has an independent shelf timer that starts at registration date and resets on each new registration (even for the same title).
