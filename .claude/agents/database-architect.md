@@ -65,6 +65,7 @@ Rules for this diagram:
 - Primary keys as `uuid` by default. Use UUID v7 (`DEFAULT uuidv7()`) — sortable by time, better B-tree index performance. Do not use `gen_random_uuid()` (UUID v4).
 - Audit timestamps (`created_at timestamptz NOT NULL DEFAULT now()`, `updated_at timestamptz NOT NULL DEFAULT now()`) on all tables.
 - Soft delete with `deleted_at timestamptz` where applicable to the domain.
+- **Never use PostgreSQL reserved words as table or column names without quoting.** Common reserved words to avoid: `user`, `order`, `group`, `table`, `column`, `value`, `type`, `role`, `session`, `index`, `select`, `insert`, `update`, `delete`, `where`, `from`, `join`. Prefer domain-specific prefixes or synonyms (e.g., `app_user` instead of `user`, `sale_order` instead of `order`, `user_role` as a junction table is acceptable since it is not the reserved word itself). If a reserved word must be used, always quote it in DDL: `"user"`, `"order"` — and document the decision.
 </conventions>
 
 <output_standards>

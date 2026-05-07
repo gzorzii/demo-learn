@@ -21,10 +21,11 @@ Você coordena internamente os agentes `database-architect` e `tech-lead`. O orq
 Regras de autenticação que DEVEM ser refletidas no `business.md` de `000-02.autenticacao`:
 
 **Ambiente de desenvolvimento (`dev`):**
-- Login via Google OAuth2
-- Login via usuário de dev (bypass — sem senha real, apenas seleção de usuário pré-cadastrado)
+- Login via Google OAuth2 desabilitado — não disponível localmente
+- Login via email: o usuário digita o email de um dos usuários pré-cadastrados no seed do banco e acessa sem senha
 - Objetivo: permitir testar a aplicação com usuários de perfis diferentes sem precisar de contas Google reais
 - Usuários de dev são pré-cadastrados no seed do banco e têm perfis variados (Administrator, Manager, Catalog, Cashier)
+- Não há validação de senha — qualquer email existente no banco com perfil atribuído é aceito
 
 **Ambiente de produção (`prod`):**
 - Somente login via Google OAuth2
