@@ -34,6 +34,12 @@ Regras de autenticação que DEVEM ser refletidas no `business.md` de `000-02.au
 - Todo usuário autenticado deve ter ao menos um perfil atribuído
 - Um usuário pode ter múltiplos perfis simultaneamente
 - Perfis fixos: Administrator, Manager, Catalog, Cashier
+
+**JWT — decisões tomadas:**
+- Após autenticação (Google ou dev bypass), o backend redireciona o frontend com o token via query param: `{FRONTEND_URL}/auth/callback?token=<jwt>`
+- Expiração do JWT: 8 horas
+- Sem refresh token — ao expirar, usuário deve reautenticar
+- Payload obrigatório: `sub` (user.id), `name`, `email`, `roles` (array), `branchId` (nullable para Administrador), `iat`, `exp`
 </auth_rules>
 
 <pipeline>
@@ -105,7 +111,29 @@ Ao invocar `tech-lead` para `000-02` e `000-03`, passar o caminho do `tech.md` d
 
 ---
 
-### Etapa 7 — Reportar conclusão
+### Etapa 7 — Gerar migration Liquibase
+
+Preencher o arquivo `src/backend/src/main/resources/db/changelog/changes/001-initial-schema.xml` com o DDL completo de todas as tabelas definidas em `product/features/000-01.modelagem-dados/tech.md`.
+
+**Regras:**
+
+1. Ler `000-01.modelagem-dados/tech.md` para extrair o DDL de cada tabela.
+2. Pular se o `<changeSet id="001-initial-schema">` já contiver conteúdo além de comentários.
+3. Usar formato `<sql>` dentro do changeSet existente — não criar novo changeSet.
+4. Ordem de criação das tabelas deve respeitar dependências de FK (tabelas referenciadas antes das que as referenciam).
+5. Incluir ao final do `<sql>` o seed dos 4 perfis fixos:
+   ```sql
+   INSERT INTO role (id, name, description, created_at, updated_at) VALUES
+     (gen_random_uuid(), 'Administrador', 'Acesso total ao sistema', now(), now()),
+     (gen_random_uuid(), 'Gerente',       'Gestão da própria filial', now(), now()),
+     (gen_random_uuid(), 'Catalogador',   'Cadastro e edição de livros', now(), now()),
+     (gen_random_uuid(), 'Caixa',         'Operação do PDV', now(), now());
+   ```
+6. O arquivo XML deve manter o cabeçalho e estrutura originais — apenas substituir o comentário `<!-- Add your initial tables here -->` pelo bloco `<sql>`.
+
+---
+
+### Etapa 8 — Reportar conclusão
 
 Listar todos os arquivos criados/pulados e confirmar que o módulo `000` está completo.
 
@@ -114,6 +142,7 @@ Listar todos os arquivos criados/pulados e confirmar que o módulo `000` está c
 <idempotency_rules>
 - Feature considerada **completa** se pasta contém `business.md` E `tech.md`.
 - Feature considerada **parcialmente completa** se contém `business.md` mas não `tech.md` — executar apenas Etapa 6 para ela.
+- Migration Liquibase considerada **completa** se `001-initial-schema.xml` já contiver conteúdo além de comentários no changeSet — pular Etapa 7.
 - Pastas vazias tratadas como novas.
 - Nunca sobrescrever arquivos existentes.
 </idempotency_rules>
