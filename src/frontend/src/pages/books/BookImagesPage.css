@@ -1,0 +1,41 @@
+.book-images-page { padding: 1.5rem; max-width: 720px; }
+.book-images-page h1 { margin: 0 0 0.25rem; font-size: 1.4rem; color: #1a1a1a; }
+.book-images-page .subtitle { color: #6b7280; margin: 0 0 1.25rem; }
+
+.images-toolbar { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; align-items: center; }
+
+.image-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.image-item {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff;
+}
+.image-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; }
+.image-item-info { flex: 1; font-size: 0.875rem; color: #6b7280; }
+.image-item-actions { display: flex; gap: 0.5rem; }
+
+.upload-section { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #e5e7eb; }
+.upload-section h2 { font-size: 1rem; margin: 0 0 0.75rem; color: #374151; }
+.upload-input { display: none; }
+.upload-label {
+  display: inline-block; padding: 0.55rem 1rem; background: #f3f4f6;
+  border: 1px dashed #9ca3af; border-radius: 6px; cursor: pointer;
+  font-size: 0.9rem; color: #374151; transition: background 0.15s;
+}
+.upload-label:hover { background: #e5e7eb; }
+.upload-progress { margin-top: 0.75rem; color: #4f46e5; font-size: 0.875rem; }
+.limit-msg { color: #92400e; font-size: 0.875rem; background: #fef3c7;
+  padding: 0.5rem 0.75rem; border-radius: 6px; margin-top: 0.75rem; }
+
+.status-msg { padding: 2rem; text-align: center; color: #6b7280; }
+.error-msg { color: #dc2626; }
+.api-error { color: #dc2626; font-size: 0.875rem; margin-top: 0.5rem; }
+
+.btn { padding: 0.45rem 0.85rem; border: none; border-radius: 6px; font-size: 0.85rem;
+  font-weight: 500; cursor: pointer; transition: background 0.15s; }
+.btn-primary { background: #4f46e5; color: #fff; }
+.btn-primary:hover { background: #4338ca; }
+.btn-secondary { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+.btn-secondary:hover { background: #e5e7eb; }
+.btn-danger { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+.btn-danger:hover { background: #fecaca; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }

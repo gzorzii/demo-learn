@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Write(/home/gzorzi/projects/demo-learn/product/features/**)"
+    ]
+  }
+}
