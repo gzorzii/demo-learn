@@ -3,5 +3,8 @@
     "allow": [
       "Write(/home/gzorzi/projects/demo-learn/product/features/**)"
     ]
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true
   }
 }
