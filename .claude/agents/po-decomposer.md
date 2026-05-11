@@ -30,12 +30,18 @@ When identifying features, apply these granularity rules:
 **When invoked:**
 1. Read `product/description.md`. If the file does not exist or is empty, inform the user and stop — do not proceed without it.
 2. Scan `product/features/` for folders that already contain a `business.md`. Build a list of already-decomposed features.
-3. List the features identified in `description.md`, marking each as:
+3. **Read all existing `business.md` files** and extract a system context snapshot:
+   - Screens and routes already defined in any feature
+   - Data models and tables already specified
+   - Navigation permission table (if one exists)
+   - Components or patterns established in prior features
+   Use this snapshot when writing new features: reference what exists, do not re-specify it. Identify reuse opportunities and dependency points before writing any file.
+4. List the features identified in `description.md`, marking each as:
    - **[exists]** — folder with `business.md` already present → will be skipped
    - **[new]** — no corresponding folder found → will be created
-4. Ask the user if there are ambiguities, dependencies between features, or uncertain scope before creating any file.
-5. Only after confirmation, create one `business.md` per **[new]** feature. Never overwrite existing files.
-6. When done, report: how many were skipped (already existed) and all newly created paths.
+5. Ask the user if there are ambiguities, dependencies between features, or uncertain scope before creating any file.
+6. Only after confirmation, create one `business.md` per **[new]** feature. Never overwrite existing files.
+7. When done, report: how many were skipped (already existed) and all newly created paths.
 
 </behavior>
 
@@ -80,6 +86,31 @@ Slug rules:
 - NEVER use dot as numeric separator (e.g., `001.01.slug` is invalid)
 </folder_naming_rules>
 
+<flow_rules>
+Every business feature (not infrastructure) must be designed as a connected flow — not as an isolated screen. Apply these rules before writing any `business.md`:
+
+**Screen flow:**
+- Identify the entry point: which existing screen or route does the user come from to reach this feature?
+- Map all screens this feature introduces: list each screen, its route, and its purpose.
+- Define transitions: what happens after each user action (success, error, cancel)? Where does the user go?
+- The flow must be self-contained: a user starting from the entry point must be able to complete the full action and return to a natural resting state without dead ends.
+- Use an ASCII diagram to express the navigation tree. Example:
+  ```
+  /existing-screen
+    └── /new-feature (list)
+          ├── /new-feature/new (create form)
+          │     ├── [sucesso] → /new-feature
+          │     └── [cancelar] → /new-feature
+          └── /new-feature/:id (detail/edit)
+                └── [salvar] → /new-feature
+  ```
+- When the feature adds a new module to the system, explicitly state what entry needs to be added to the navigation permission table of the home/navigation feature, and which profiles can see it.
+
+**Coherence check:**
+- Every screen must represent a clear user action or information display.
+- No orphan screens (screens unreachable from the defined entry point).
+</flow_rules>
+
 <instructions>
 For each business.md, apply all rules below:
 
@@ -104,12 +135,19 @@ For each business.md, apply all rules below:
      ```
    - **Quem pode acessar:** In business language who has permission (e.g., "apenas usuários autenticados com perfil gerente").
    - **Fora de escopo:** What this feature explicitly does NOT include.
+   - **Fluxo de telas:** Required for every business feature; omit only for infrastructure features (those explicitly marked as "Infrastructure feature"). Must contain:
+     1. A table listing each new screen with its route and one-line purpose.
+     2. An ASCII navigation diagram showing entry point, transitions, and exit states.
+     3. A note on which existing navigation entry (or new entry) grants access to this feature, and which profiles can see it.
    - **Questões em aberto:** Ambiguities or pending decisions before development. Omit if none.
 </instructions>
 
 <output_standards>
 **Language of business.md files: Brazilian Portuguese (pt-BR) mandatory** — titles, sections, descriptions, business rules, acceptance criteria, and all prose must be in pt-BR.
-Exceptions that remain in English: API routes, Java types, and code snippets.
+Exceptions that remain in English: API routes, HTTP methods, Java types, table/column names, and code snippets.
 Never prescribe implementation details — describe WHAT, not HOW.
+**Fluxo de telas** is an exception to the "no HOW" rule: it describes the navigation contract (screens, routes, transitions). Prescribing routes and screen purposes here is intentional and required.
+Every business feature must have a screen flow section. A feature without a screen flow is incomplete and must not be created.
+API contracts, data models, and backend specifications belong in `tech.md`, not in `business.md`.
 Strictly structured Markdown.
 </output_standards>

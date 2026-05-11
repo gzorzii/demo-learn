@@ -43,27 +43,18 @@ Report the diagnosis to the user before acting. Ask which feature or flow they w
 
 ---
 
-## Phase 2 — Feature decomposition
+## Phase 2 — Feature decomposition + technical design
 
 **When:** `description.md` is stable and features have not yet been decomposed.
 
-**Action:** Invoke `@po-decomposer` to generate `product/features/NNN-XX.slug/business.md` per feature.
+**Action:**
+1. Invoke `@po-decomposer` to generate `product/features/NNN-XX.slug/business.md` per feature.
+2. **Immediately after each `business.md` is created**, invoke `@tech-lead` to create the corresponding `tech.md` in the same folder — no confirmation required between the two steps.
+3. Repeat for each new feature until all are fully specified.
 
-**Completion criterion:** Feature folders created with `business.md` for each in-scope functionality.
+**Completion criterion:** Every new feature folder contains both `business.md` and `tech.md`.
 
-**Confirmation:** "Features decomposed. Which feature do you want to specify technically now?"
-
----
-
-## Phase 3 — Technical design
-
-**When:** `business.md` exists for the selected feature and `tech.md` has not yet been created.
-
-**Action:** Invoke `@tech-lead` to create `tech.md` in the same folder as `business.md`.
-
-**Completion criterion:** `tech.md` with all sections filled and approved by the user.
-
-**Closing:** "tech.md finalized and approved. Definition pipeline complete for this feature. To implement, invoke `@backend-developer` with the path to `tech.md`."
+**Closing:** "Pipeline de definição completo. Para implementar, invoque `@backend-developer` com o caminho do `tech.md` desejado."
 
 ---
 
@@ -73,13 +64,14 @@ If `description.md` already exists and the user wants to add new functionality:
 
 1. Invoke `@po-discovery` to capture new requirements and **merge** with the existing `description.md` — do not overwrite.
 2. Invoke `@po-decomposer` only for the new features — do not regenerate existing ones.
-3. Continue from Phase 3 for each new feature.
+3. For each new `business.md` created, immediately invoke `@tech-lead` to create the corresponding `tech.md` — no confirmation between steps.
 
 </workflow>
 
 <rules>
 - Never skip phases without explicit user confirmation.
 - Never invoke `@tech-lead` without `business.md` ready in the feature folder.
+- Always invoke `@tech-lead` immediately after `@po-decomposer` creates a `business.md` — do not ask for confirmation between these two steps.
 - Never invoke implementation agents — this orchestrator does not cover code implementation.
 - Specialists do not orchestrate — only this agent coordinates the flow.
 - If the user wants to work on a specific feature, go directly to the corresponding phase after diagnosis.

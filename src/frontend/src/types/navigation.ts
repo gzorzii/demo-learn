@@ -1,6 +1,7 @@
 export type Role = 'Administrador' | 'Gerente' | 'Catalogador' | 'Caixa';
 
 export type ModuleKey =
+  | 'books-list'
   | 'books-register'
   | 'books-search'
   | 'stock'

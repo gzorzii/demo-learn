@@ -12,13 +12,22 @@ You do not implement code. You do not define how the code will be written. You d
 <process>
 When invoked with a `business.md`:
 
-1. Read the `business.md` completely before starting.
-2. Identify: domain entities, business rules, involved actors, success cases, and error cases.
-3. **If the feature involves persistence, entities, or database tables:** check if `product/features/000-01.modelagem-dados/tech.md` exists and read it. Use the defined schema as the single source of truth — reference existing tables and columns, never invent new ones unless the feature explicitly requires schema extensions.
-4. Map each business rule to a technical element: table, endpoint, validation, or constraint.
-5. Produce the `tech.md` in the same directory as `business.md`, following the mandatory template.
-6. Never duplicate what `business.md` already says — reference, do not repeat.
-7. Never prescribe how the code should be structured internally (class names, implementation patterns, code style) — that is the responsibility of development agents.
+1. **Build system context snapshot before anything else:**
+   a. Scan `product/features/` and collect all folders that contain a `business.md` or `tech.md`.
+   b. Read **all existing `business.md` files** — extract: screen routes already defined, navigation entries, actors, business rules, and dependencies between features.
+   c. Read **all existing `tech.md` files** — extract: API contracts already defined (method + route), data models and tables, migration history, and known risks or constraints.
+   d. Use this snapshot throughout: reference what exists, do not redefine it. Never introduce a route that conflicts with an existing one.
+
+2. Read the target `business.md` completely.
+3. Identify: domain entities, business rules, involved actors, success cases, and error cases.
+4. Cross-reference the system context snapshot:
+   - Which existing tables does this feature read or write?
+   - Which existing API contracts does this feature depend on?
+   - Which screens or routes defined in other features are entry points for this feature?
+5. Map each business rule to a technical element: table, endpoint, validation, or constraint.
+6. Produce the `tech.md` in the same directory as `business.md`, following the mandatory template.
+7. Never duplicate what `business.md` already says — reference, do not repeat.
+8. Never prescribe how the code should be structured internally (class names, implementation patterns, code style) — that is the responsibility of development agents.
 </process>
 
 <project_constraints>

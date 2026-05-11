@@ -1,6 +1,7 @@
 import type { ModuleKey, Role } from '../types/navigation';
 
 export const MODULE_PERMISSIONS: Record<ModuleKey, Role[]> = {
+  'books-list':      ['Administrador', 'Gerente', 'Catalogador', 'Caixa'],
   'books-register':  ['Administrador', 'Gerente', 'Catalogador'],
   'books-search':    ['Administrador', 'Gerente', 'Catalogador', 'Caixa'],
   'stock':           ['Administrador', 'Gerente', 'Catalogador'],

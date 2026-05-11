@@ -1,8 +1,9 @@
 import type { NavModule } from '../types/navigation';
 
 export const MODULES: NavModule[] = [
-  { key: 'books-register',  label: 'Cadastro de Livros',     route: '/livros/cadastro',  icon: '📚' },
-  { key: 'books-search',    label: 'Busca de Livros',         route: '/livros/busca',     icon: '🔍' },
+  { key: 'books-list',      label: 'Catálogo de Livros',      route: '/books',            icon: '📚' },
+  { key: 'books-register',  label: 'Cadastrar Livro',         route: '/books/new',        icon: '➕' },
+  { key: 'books-search',    label: 'Buscar Livros',           route: '/books/search',     icon: '🔍' },
   { key: 'stock',           label: 'Controle de Estoque',     route: '/estoque',          icon: '📦' },
   { key: 'labels',          label: 'Impressão de Etiquetas',  route: '/etiquetas',        icon: '🏷️' },
   { key: 'pdv',             label: 'PDV / Vendas',            route: '/pdv',              icon: '🛒' },
