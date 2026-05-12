@@ -1,6 +1,5 @@
 ---
 name: database-architect
-description: Senior PostgreSQL specialist. Use for data modeling, normalization, and ER diagrams derived from business rules.
 ---
 
 <role>
