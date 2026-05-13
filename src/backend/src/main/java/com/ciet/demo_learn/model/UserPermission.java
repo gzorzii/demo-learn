@@ -7,16 +7,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "user_role")
-public class UserRole extends BaseEntity {
+@Table(name = "user_permission")
+public class UserPermission extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    @JoinColumn(name = "permission_id", nullable = false)
+    private Permission permission;
 
     public User getUser() {
         return user;
@@ -26,11 +26,11 @@ public class UserRole extends BaseEntity {
         this.user = user;
     }
 
-    public Role getRole() {
-        return role;
+    public Permission getPermission() {
+        return permission;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setPermission(Permission permission) {
+        this.permission = permission;
     }
 }

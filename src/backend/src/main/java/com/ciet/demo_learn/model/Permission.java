@@ -5,22 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "role")
-public class Role extends BaseEntity {
+@Table(name = "permission")
+public class Permission extends BaseEntity {
 
-    @Column(name = "name", nullable = false, unique = true)
-    private String name;
-
-    @Column(name = "description")
+    @Column(name = "description", nullable = false, unique = true)
     private String description;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getDescription() {
         return description;

@@ -32,13 +32,14 @@ public class AuthService {
 
     @Transactional(readOnly = true)
     public String login(String email) {
-        var user = userRepository.findByEmailWithRoles(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
-        List<String> roles = user.getUserRoles().stream().map(ur -> ur.getRole().getName()).toList();
-        if (roles.isEmpty()) {
+        var user = userRepository.findByEmailWithPermissions(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+        List<String> permissions = user.getUserPermissions().stream()
+                .map(up -> up.getPermission().getDescription())
+                .toList();
+        if (permissions.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
-        return jwtTokenProvider.generate(user, roles);
+        return jwtTokenProvider.generate(user, permissions, null);
     }
 
     @Transactional(readOnly = true)
@@ -51,7 +52,7 @@ public class AuthService {
         GoogleIdToken googleToken;
         try {
             googleToken = verifier.verify(idToken);
-        } catch (Exception e) {
+        } catch (Exception _) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
 
@@ -59,15 +60,19 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
 
-        String email = googleToken.getPayload().getEmail();
-        var user = userRepository.findByEmailWithRoles(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+        GoogleIdToken.Payload payload = googleToken.getPayload();
+        String email = payload.getEmail();
+        String picture = (String) payload.get("picture");
 
-        List<String> roles = user.getUserRoles().stream().map(ur -> ur.getRole().getName()).toList();
-        if (roles.isEmpty()) {
+        var user = userRepository.findByEmailWithPermissions(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
+        List<String> permissions = user.getUserPermissions().stream()
+                .map(up -> up.getPermission().getDescription())
+                .toList();
+        if (permissions.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
 
-        return jwtTokenProvider.generate(user, roles);
+        return jwtTokenProvider.generate(user, permissions, picture);
     }
 }

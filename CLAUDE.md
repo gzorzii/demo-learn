@@ -2,7 +2,7 @@
 
 ## Project
 
-Web-based management system for bookstores and used bookstores. Supports book registration with images, per-branch stock control, label printing, POS with discounts and multiple payment methods, trade-in vouchers, used book purchases, customer wishlists, shelf time tracking, and reports. Multi-branch with role-based access (Administrator, Manager, Catalog, Cashier).
+Esse é um projeto para um sistema de avaliação de performace dos funcionarios da empresa.
 
 ## Stack
 

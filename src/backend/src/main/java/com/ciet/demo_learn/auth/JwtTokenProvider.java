@@ -24,16 +24,19 @@ public class JwtTokenProvider {
         this.properties = properties;
     }
 
-    public String generate(User user, List<String> roles) {
+    public String generate(User user, List<String> permissions, String picture) {
         Instant now = Instant.now();
-        JwtClaimsSet claims = JwtClaimsSet.builder()
+        JwtClaimsSet.Builder builder = JwtClaimsSet.builder()
                 .subject(user.getId().toString())
                 .claim("name", user.getName())
                 .claim("email", user.getEmail())
-                .claim("roles", roles)
+                .claim("roles", permissions)
                 .issuedAt(now)
-                .expiresAt(now.plusSeconds(properties.jwt().expirationSeconds()))
-                .build();
+                .expiresAt(now.plusSeconds(properties.jwt().expirationSeconds()));
+        if (picture != null) {
+            builder.claim("picture", picture);
+        }
+        JwtClaimsSet claims = builder.build();
         JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
         return jwtEncoder.encode(JwtEncoderParameters.from(header, claims)).getTokenValue();
     }

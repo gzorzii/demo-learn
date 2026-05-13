@@ -1,47 +1,64 @@
 -- liquibase formatted sql
 
+-- changeset gzorzi:001-create-area
+CREATE TABLE area (
+    id          UUID         NOT NULL PRIMARY KEY,
+    region      VARCHAR(100) NOT NULL,
+    growth_unit VARCHAR(100) NOT NULL,
+    created_at  TIMESTAMPTZ  NOT NULL,
+    updated_at  TIMESTAMPTZ  NOT NULL,
+    created_by  UUID,
+    updated_by  UUID
+);
+
 -- changeset gzorzi:001-create-users
 CREATE TABLE users (
-    id          UUID        NOT NULL PRIMARY KEY,
-    name        VARCHAR(255) NOT NULL,
-    email       VARCHAR(255) NOT NULL UNIQUE,
-    active      BOOLEAN     NOT NULL DEFAULT TRUE,
-    created_at  TIMESTAMPTZ NOT NULL,
-    updated_at  TIMESTAMPTZ NOT NULL,
+    id           UUID         NOT NULL PRIMARY KEY,
+    name         VARCHAR(255) NOT NULL,
+    login        VARCHAR(100) NOT NULL UNIQUE,
+    email        VARCHAR(100) NOT NULL UNIQUE,
+    role         VARCHAR(50)  NOT NULL,
+    position_map VARCHAR(50)  NOT NULL,
+    admission_date DATE,
+    area         UUID         REFERENCES area(id),
+    active       BOOLEAN      NOT NULL DEFAULT TRUE,
+    pdm          UUID         REFERENCES users(id),
+    bp           UUID         REFERENCES users(id),
+    created_at   TIMESTAMPTZ  NOT NULL,
+    updated_at   TIMESTAMPTZ  NOT NULL,
+    created_by   UUID,
+    updated_by   UUID
+);
+
+-- changeset gzorzi:001-create-permission
+CREATE TABLE permission (
+    id          UUID         NOT NULL PRIMARY KEY,
+    description VARCHAR(255) NOT NULL UNIQUE,
+    created_at  TIMESTAMPTZ  NOT NULL,
+    updated_at  TIMESTAMPTZ  NOT NULL,
     created_by  UUID,
     updated_by  UUID
 );
 
--- changeset gzorzi:001-create-role
-CREATE TABLE role (
-    id          UUID        NOT NULL PRIMARY KEY,
-    name        VARCHAR(255) NOT NULL UNIQUE,
-    description VARCHAR(500),
-    created_at  TIMESTAMPTZ NOT NULL,
-    updated_at  TIMESTAMPTZ NOT NULL,
-    created_by  UUID,
-    updated_by  UUID
+-- changeset gzorzi:001-create-user-permission
+CREATE TABLE user_permission (
+    id            UUID        NOT NULL PRIMARY KEY,
+    user_id       UUID        NOT NULL REFERENCES users(id),
+    permission_id UUID        NOT NULL REFERENCES permission(id),
+    created_at    TIMESTAMPTZ NOT NULL,
+    updated_at    TIMESTAMPTZ NOT NULL,
+    created_by    UUID,
+    updated_by    UUID
 );
 
--- changeset gzorzi:001-create-user-role
-CREATE TABLE user_role (
-    id          UUID        NOT NULL PRIMARY KEY,
-    user_id     UUID        NOT NULL REFERENCES users(id),
-    role_id     UUID        NOT NULL REFERENCES role(id),
-    created_at  TIMESTAMPTZ NOT NULL,
-    updated_at  TIMESTAMPTZ NOT NULL,
-    created_by  UUID,
-    updated_by  UUID
-);
+CREATE INDEX idx_user_permission_user_id ON user_permission(user_id);
 
-CREATE INDEX idx_user_role_user_id ON user_role(user_id);
+-- changeset gzorzi:001-seed-base
+INSERT INTO permission (id, description, created_at, updated_at) VALUES
+    ('019e223f-1ba0-767d-b3c4-0df5f5f247fd'::uuid, 'ADMIN',               now(), now());
 
--- changeset gzorzi:001-seed-admin
-INSERT INTO role (id, name, description, created_at, updated_at)
-VALUES ('019e1e93-1c85-70a2-bdbe-fbf09601ffa0', 'Administrador', 'Acesso total ao sistema', now(), now());
+INSERT INTO users (id, name, login, email, role, position_map, active, created_at, updated_at) VALUES
+    ('019e223f-5421-7871-962d-8b5b0997b534'::uuid, 'Admin',          'admin',          'admin@demo.com.br',         'DEVELOPER', 'SENIOR',    true, now(), now());
 
-INSERT INTO users (id, name, email, active, created_at, updated_at)
-VALUES ('019e1e92-da72-759d-8c55-d13885aaf931', 'Admin', 'admin@demo.com', true, now(), now());
-
-INSERT INTO user_role (id, user_id, role_id, created_at, updated_at)
-VALUES ('019e1e93-3f52-7fbd-ae8d-e4c0892be2f5','019e1e92-da72-759d-8c55-d13885aaf931','019e1e93-1c85-70a2-bdbe-fbf09601ffa0',now(), now());
+INSERT INTO user_permission (id, user_id, permission_id, created_at, updated_at) VALUES
+    ('019e223f-d502-7e9b-8b7d-b5444968da44'::uuid, '019e223f-5421-7871-962d-8b5b0997b534'::uuid, '019e223f-1ba0-767d-b3c4-0df5f5f247fd'::uuid, now(), now());
