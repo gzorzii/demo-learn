@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", sans-serif;
+
+  --color-navy: #201E73;
+  --color-orange: #fd6e5e;
+  --color-yellow: #EBC512;
+  --color-lightgray: #EDEDED;
+  
+  /* Aliases for semantic usage */
+  --color-primary: var(--color-navy);
+  --color-accent: var(--color-orange);
+  --color-warning: var(--color-yellow);
+  --color-background-alt: var(--color-lightgray);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #F8F9FA;
+  color: #333;
+}
