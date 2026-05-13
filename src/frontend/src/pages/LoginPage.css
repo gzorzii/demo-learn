@@ -73,3 +73,29 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.login-divider {
+  text-align: center;
+  margin: 1.25rem 0 1rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  position: relative;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 42%;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.login-divider::before { left: 0; }
+.login-divider::after  { right: 0; }
+
+.login-google {
+  display: flex;
+  justify-content: center;
+}

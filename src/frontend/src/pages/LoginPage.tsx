@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLogin, type CredentialResponse } from '@react-oauth/google';
 import { authService } from '../services/authService';
 import './LoginPage.css';
 
@@ -8,6 +9,20 @@ export function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  async function handleGoogleSuccess(credentialResponse: CredentialResponse) {
+    if (!credentialResponse.credential) return;
+    setError('');
+    setLoading(true);
+    try {
+      await authService.googleLogin(credentialResponse.credential);
+      navigate('/', { replace: true });
+    } catch {
+      setError('Conta Google não autorizada.');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -43,6 +58,14 @@ export function LoginPage() {
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
+        <div className="login-divider">ou</div>
+        <div className="login-google">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setError('Falha ao autenticar com Google.')}
+            useOneTap={false}
+          />
+        </div>
       </div>
     </div>
   );

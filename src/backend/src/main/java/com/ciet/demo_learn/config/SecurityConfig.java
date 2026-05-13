@@ -1,20 +1,18 @@
 package com.ciet.demo_learn.config;
 
-import com.ciet.demo_learn.auth.JwtProperties;
+import com.ciet.demo_learn.auth.CookieBearerTokenResolver;
 
-import org.springframework.context.annotation.Bean;
+import com.ciet.demo_learn.auth.JwtToAuthenticatedUserConverter;import com.ciet.demo_learn.dto.JwtProperties;import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -32,26 +30,29 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtProperties jwtProperties;
+    private final JwtToAuthenticatedUserConverter jwtConverter;
 
-    public SecurityConfig(JwtProperties jwtProperties) {
+    public SecurityConfig(JwtProperties jwtProperties, JwtToAuthenticatedUserConverter jwtConverter) {
         this.jwtProperties = jwtProperties;
+        this.jwtConverter = jwtConverter;
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http) {
         http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(AbstractHttpConfigurer::disable)
-            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/login", "/uploads/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .oauth2ResourceServer(oauth2 -> oauth2
-                .bearerTokenResolver(new CookieBearerTokenResolver())
-                .jwt(jwt -> jwt.decoder(jwtDecoder())
-                               .jwtAuthenticationConverter(jwtAuthenticationConverter()))
-            );
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/login", "/auth/google").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .bearerTokenResolver(new CookieBearerTokenResolver())
+                        .jwt(jwt ->
+                                jwt.decoder(jwtDecoder())
+                                .jwtAuthenticationConverter(jwtConverter))
+                );
         return http.build();
     }
 
@@ -66,19 +67,6 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
-    }
-
-    @Bean
-    public JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        converter.setJwtGrantedAuthoritiesConverter(jwt -> {
-            List<String> roles = jwt.getClaimAsStringList("roles");
-            if (roles == null) return List.of();
-            return roles.stream()
-                    .<org.springframework.security.core.GrantedAuthority>map(SimpleGrantedAuthority::new)
-                    .toList();
-        });
-        return converter;
     }
 
     @Bean

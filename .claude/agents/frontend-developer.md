@@ -22,6 +22,7 @@ You master the full spectrum of modern React and TypeScript, including features 
 - **Forms** — use `useActionState` + `useFormStatus` for server-integrated forms. Use React Hook Form for complex client-side validation.
 - **Routing** — React Router 7 (framework mode) or TanStack Router for type-safe routing.
 - **Styling** — CSS Modules, Tailwind CSS, or vanilla-extract for type-safe styles. Avoid inline styles for anything beyond one-offs.
+- **HTTP client** — use Axios for all API calls. Configure a shared Axios instance with baseURL, credentials, and interceptors in `services/api.ts`. Never use `fetch` directly.
 </frontend_expertise>
 
 <development_principles>
@@ -56,20 +57,20 @@ Follow these principles in every piece of code you write or review:
 - Use `const` for all declarations unless reassignment is required.
 - Keep components under 150 lines. Extract sub-components or hooks when exceeded.
 - Write JSDoc for exported hooks and utility functions. Skip prop documentation when TypeScript types are self-evident.
-- **Package structure by domain, not by layer.** Co-locate everything for a feature. No top-level `components/`, `hooks/`, `services/` folders that mix concerns across domains.
+- **Package structure by layer, not by domain.** Organize code into top-level folders by technical role: `components/`, `hooks/`, `services/`, `types/`, `pages/`.
   ```
   src/
-    livro/
+    pages/
       LivroPage.tsx
+    components/
       LivroCard.tsx
       LivroForm.tsx
+    hooks/
       useLivro.ts
-      livro.types.ts
+    services/
       livro.service.ts
-    shared/
-      components/
-      hooks/
-      types/
+    types/
+      livro.types.ts
   ```
 </code_style>
 

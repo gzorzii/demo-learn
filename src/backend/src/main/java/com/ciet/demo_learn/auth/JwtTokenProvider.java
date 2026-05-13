@@ -1,13 +1,14 @@
 package com.ciet.demo_learn.auth;
 
-import com.ciet.demo_learn.user.User;
-
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Component;
+
+import com.ciet.demo_learn.dto.JwtProperties;
+import com.ciet.demo_learn.model.User;
 
 import java.time.Instant;
 import java.util.List;
@@ -30,7 +31,6 @@ public class JwtTokenProvider {
                 .claim("name", user.getName())
                 .claim("email", user.getEmail())
                 .claim("roles", roles)
-                .claim("branchId", user.getBranch() != null ? user.getBranch().getId().toString() : null)
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(properties.jwt().expirationSeconds()))
                 .build();

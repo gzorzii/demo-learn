@@ -25,11 +25,25 @@ Web-based management system for bookstores and used bookstores. Supports book re
 ```
 src/
 ├── backend/
-│   ├── build.gradle                         # dependencies and toolchain
-│   ├── src/main/java/com/ciet/demo_learn/   # source code
-│   └── src/main/resources/                  # application.properties
+│   ├── build.gradle
+│   └── src/main/java/com/ciet/demo_learn/
+│       ├── controller/
+│       ├── service/
+│       ├── repository/
+│       ├── model/
+│       ├── dto/
+│       ├── exception/
+│       ├── config/
+│       └── DemoLearnApplication.java
 └── frontend/
-    └── src/                                 # components, pages, services
+    └── src/
+        ├── components/
+        ├── hooks/
+        ├── pages/
+        ├── services/
+        ├── types/
+        ├── App.tsx
+        └── main.tsx
 ```
 
 ## Commands

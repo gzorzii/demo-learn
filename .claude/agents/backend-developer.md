@@ -72,15 +72,18 @@ Follow these principles in every piece of code you write or review:
 - Use `final` on local variables when reassignment would be a bug.
 - Keep methods under 20 lines when practical. Extract meaningful helper methods with intention-revealing names.
 - Write Javadoc for public API methods. Skip obvious getter/setter documentation.
-- **Package structure by domain, not by layer.** All files for a feature (entity, controller, service, repository, request, response) live in the **same package**, grouped by domain. Do not create `controller/`, `service/`, `repository/` top-level packages. Cross-cutting packages (`exception/`, `config/`) are the only allowed horizontal packages.
-- **One request record file, one response record file per domain.** Do not group all DTOs into a single `Contracts` file.
+- **Package structure by layer, not by domain.** Organize code into top-level packages by technical role: `controller/`, `service/`, `repository/`, `model/`, `dto/`. Cross-cutting packages (`exception/`, `config/`) follow the same pattern.
   ```
   com.ciet.demo_learn/
-    livro/
-      Livro.java
+    controller/
       LivroController.java
+    service/
       LivroService.java
+    repository/
       LivroRepository.java
+    model/
+      Livro.java
+    dto/
       LivroRequest.java
       LivroResponse.java
     exception/

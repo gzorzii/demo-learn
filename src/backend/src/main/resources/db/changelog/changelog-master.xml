@@ -5,8 +5,5 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
 
-    <include file="db/changelog/changes/001-initial-schema.xml"/>
-    <include file="db/changelog/changes/002-seed-users.xml"/>
-    <include file="db/changelog/changes/003-book-catalog-indexes.xml"/>
-
+    <include file="db/changelog/changes/001-initial-schema.sql"/>
 </databaseChangeLog>
