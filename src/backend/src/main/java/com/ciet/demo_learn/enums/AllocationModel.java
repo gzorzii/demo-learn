@@ -6,13 +6,13 @@ public enum AllocationModel {
     STAFF_AUG("Staff Augmentation"),
     SDLC("SDLC");
 
-    public final String descrition;
+    public final String description;
 
-    AllocationModel(String descrition) {
-        this.descrition = descrition;
+    AllocationModel(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }

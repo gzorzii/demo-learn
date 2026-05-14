@@ -6,13 +6,13 @@ public enum DebriefingStatus {
     SCHEDULED("Scheduled"),
     CONDUCTED("Conducted");
 
-    public final String descrition;
+    public final String description;
 
-    DebriefingStatus(String descrition) {
-        this.descrition = descrition;
+    DebriefingStatus(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }

@@ -8,13 +8,13 @@ public enum CycleStatus {
     CLOSED("Closed"),
     CANCELLED("Cancelled");
 
-    public final String descrition;
+    public final String description;
 
-    CycleStatus(String descrition) {
-        this.descrition = descrition;
+    CycleStatus(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }

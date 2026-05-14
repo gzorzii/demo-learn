@@ -28,11 +28,18 @@ Seções abaixo são agrupamentos lógicos por domínio; não representam módul
 
 ---
 
+## 0. Infraestrutura
+
+| NNN | Slug                        | Título                                              | Atores                              | Status    |
+|-----|-----------------------------|-----------------------------------------------------|-------------------------------------|-----------|
+| 001 | modelo-de-dados             | Modelo de dados do sistema (ER + glossário)         | Sistema                             | [exists]  |
+
+---
+
 ## 1. Autenticação e Navegação
 
 | NNN | Slug                        | Título                                              | Atores                              | Status    |
 |-----|-----------------------------|-----------------------------------------------------|-------------------------------------|-----------|
-| 001 | login                       | Login                                               | Todos                               | [skipped] |
 | 002 | menu-navegacao              | Menu lateral e controle de acesso por perfil        | Todos                               | [new]     |
 
 **Notas:**
@@ -154,8 +161,6 @@ Seções abaixo são agrupamentos lógicos por domínio; não representam módul
 
 ## Resumo
 
-| Total identificado | [skipped] | [new] |
-|--------------------|-----------|-------|
-| 35                 | 1         | 34    |
-
-Features a criar: **34 arquivos `business.md`** nos respectivos subdiretórios de `product/features/`.
+| Total identificado | [exists] | [skipped] | [new] |
+|--------------------|----------|-----------|-------|
+| 36                 | 1        | 1         | 34    |

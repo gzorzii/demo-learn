@@ -6,13 +6,13 @@ public enum AiAlertStatus {
     DISMISSED("Dismissed"),
     RESOLVED("Resolved");
 
-    public final String descrition;
+    public final String description;
 
-    AiAlertStatus(String descrition) {
-        this.descrition = descrition;
+    AiAlertStatus(String description) {
+        this.description = description;
     }
 
     public String getDescrition() {
-        return descrition;
+        return description;
     }
 }

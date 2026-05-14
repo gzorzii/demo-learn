@@ -6,13 +6,13 @@ public enum AiAlertType {
     LOW_DIMENSION_COVERAGE("Low Dimension Coverage"),
     INCOHERENCE("Incoherence");
 
-    public final String descrition;
+    public final String description;
 
-    AiAlertType(String descrition) {
-        this.descrition = descrition;
+    AiAlertType(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }

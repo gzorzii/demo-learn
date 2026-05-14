@@ -6,13 +6,13 @@ public enum CalibrationItemStatus {
     DRAFT("Draft"),
     CONFIRMED("Confirmed");
 
-    public final String descrition;
+    public final String description;
 
-    CalibrationItemStatus(String descrition) {
-        this.descrition = descrition;
+    CalibrationItemStatus(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }

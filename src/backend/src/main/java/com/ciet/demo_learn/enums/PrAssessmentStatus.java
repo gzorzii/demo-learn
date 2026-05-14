@@ -5,13 +5,13 @@ public enum PrAssessmentStatus {
     DRAFT("Draft"),
     SUBMITTED("Submitted");
 
-    public final String descrition;
+    public final String description;
 
-    PrAssessmentStatus(String descrition) {
-        this.descrition = descrition;
+    PrAssessmentStatus(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }

@@ -7,13 +7,13 @@ public enum TriggerType {
     MANUAL_PDM("Manual PDM"),
     MANUAL_SUBJECT("Manual Subject");
 
-    public final String descrition;
+    public final String description;
 
-    TriggerType(String descrition) {
-        this.descrition = descrition;
+    TriggerType(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }

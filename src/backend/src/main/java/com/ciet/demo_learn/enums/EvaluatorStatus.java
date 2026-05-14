@@ -6,13 +6,13 @@ public enum EvaluatorStatus {
     RESPONDED("Responded"),
     SKIPPED("Skipped");
 
-    public final String descrition;
+    public final String description;
 
-    EvaluatorStatus(String descrition) {
-        this.descrition = descrition;
+    EvaluatorStatus(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }

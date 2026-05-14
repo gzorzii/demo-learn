@@ -6,13 +6,13 @@ public enum AiSummaryStatus {
     APPROVED("Approved"),
     REJECTED("Rejected");
 
-    public final String descrition;
+    public final String description;
 
-    AiSummaryStatus(String descrition) {
-        this.descrition = descrition;
+    AiSummaryStatus(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }

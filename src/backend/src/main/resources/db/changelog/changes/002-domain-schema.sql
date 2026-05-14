@@ -1,14 +1,5 @@
 -- liquibase formatted sql
 
--- changeset gzorzi:002-alter-users
-ALTER TABLE users RENAME COLUMN area TO area_id;
-ALTER TABLE users RENAME COLUMN pdm TO pdm_id;
-ALTER TABLE users RENAME COLUMN bp TO bp_id;
-ALTER TABLE users ADD COLUMN deleted_at TIMESTAMPTZ;
-
--- changeset gzorzi:002-update-users-role-seed
-UPDATE users SET role = 'ADMIN' WHERE role = 'DEVELOPER';
-
 -- changeset gzorzi:002-create-cycle
 CREATE TABLE cycle (
     id                     UUID         NOT NULL PRIMARY KEY,

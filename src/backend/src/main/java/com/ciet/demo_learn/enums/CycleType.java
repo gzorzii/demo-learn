@@ -5,13 +5,13 @@ public enum CycleType {
     CF("Continuous Feedback"),
     PR("Performance Review");
 
-    public final String descrition;
+    public final String description;
 
-    CycleType(String descrition) {
-        this.descrition = descrition;
+    CycleType(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }

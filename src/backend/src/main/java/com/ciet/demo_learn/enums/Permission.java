@@ -1,15 +1,16 @@
 package com.ciet.demo_learn.enums;
 
-public enum SessionParticipantRole {
+public enum Permission {
 
+    CIETER("CI&TER"),
     PDM("PDM"),
-    CALIBRADOR("Calibrador"),
+    CALIBRATOR("CALIBRATOR"),
     BP("Business Partner"),
-    GOVERNANCA("Governança");
+    ADMIN("ADMIN");
 
-    public final String description;
+    private final String description;
 
-    SessionParticipantRole(String description) {
+    Permission(String description) {
         this.description = description;
     }
 

@@ -4,6 +4,7 @@ build/
 !src/backend/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+docs/superpowers/**
 
 ### STS ###
 .apt_generated

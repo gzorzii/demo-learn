@@ -8,13 +8,13 @@ public enum CycleSubjectStatus {
     CALIBRATED("Calibrated"),
     DEBRIEFED("Debriefed");
 
-    public final String descrition;
+    public final String description;
 
-    CycleSubjectStatus(String descrition) {
-        this.descrition = descrition;
+    CycleSubjectStatus(String description) {
+        this.description = description;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 }
