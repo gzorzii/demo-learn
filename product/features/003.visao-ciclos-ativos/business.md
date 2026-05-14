@@ -73,9 +73,9 @@ Então no máximo um ciclo de cada tipo pode aparecer ativo ao mesmo tempo para 
 
 ### Telas introduzidas por esta feature
 
-| Tela              | Rota       | Propósito                                                              |
-|-------------------|------------|------------------------------------------------------------------------|
-| Ciclos ativos     | `/ciclos`  | Painel somente leitura com CF e PR ativos do colaborador autenticado   |
+| Tela              | Rota            | Propósito                                                              |
+|-------------------|-----------------|------------------------------------------------------------------------|
+| Ciclos ativos     | `/meus-ciclos`  | Painel somente leitura com CF e PR ativos do colaborador autenticado   |
 
 ### Diagrama de navegação
 
@@ -95,7 +95,8 @@ Esta tela é acessada pelo item "Meus Ciclos" (ou equivalente) no menu lateral, 
 
 ---
 
-## Questões em aberto
+## Decisões registradas
 
-- Qual a nomenclatura do item no menu lateral para o Colaborador? ("Meus Ciclos", "Visão Geral", "Sync"?)
-- O PDM acessa a visão de ciclos ativos do liderado pela mesma rota `/ciclos` com um parâmetro de colaborador, ou por uma rota distinta como `/meu-time/:id/ciclos`?
+- **Item no menu lateral:** "Meus Ciclos" (para CIETER e PDM).
+- **Rota do PDM para ver ciclos do liderado:** rota distinta `/meu-time/:id/ciclos` — escopo da feature de gestão do time, não desta.
+- **Componente de frontend compartilhado:** o componente de painel de ciclos (`CyclesDashboard`) deve ser reutilizável entre `/meus-ciclos` (colaborador vê seus próprios ciclos) e `/meu-time/:id/ciclos` (PDM vê ciclos de um liderado). O componente recebe o userId como parâmetro opcional; quando ausente, usa o ID do usuário autenticado.

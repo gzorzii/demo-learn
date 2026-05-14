@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.ciet.demo_learn.model.User;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,4 +14,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.userPermissions WHERE u.email = :email AND u.active = true")
     Optional<User> findByEmailWithPermissions(@Param("email") String email);
+
+    List<User> findByPdmIdAndActiveTrueAndDeletedAtIsNull(UUID pdmId);
+
+    boolean existsByIdAndPdmIdAndActiveTrueAndDeletedAtIsNull(UUID userId, UUID pdmId);
 }
