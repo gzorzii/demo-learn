@@ -4,6 +4,8 @@ import com.ciet.demo_learn.enums.PositionMap;
 import com.ciet.demo_learn.enums.Role;
 import jakarta.persistence.*;
 
+import java.time.Instant;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,16 +38,19 @@ public class User extends BaseEntity {
     private Boolean active;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "area")
+    @JoinColumn(name = "area_id")
     private Area area;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pdm")
+    @JoinColumn(name = "pdm_id")
     private User pdm;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bp")
+    @JoinColumn(name = "bp_id")
     private User bp;
+
+    @Column(name = "deleted_at")
+    private Instant deletedAt;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<UserPermission> userPermissions = new ArrayList<>();
@@ -128,5 +133,13 @@ public class User extends BaseEntity {
 
     public void setAdmissionDate(LocalDate admissionDate) {
         this.admissionDate = admissionDate;
+    }
+
+    public Instant getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Instant deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

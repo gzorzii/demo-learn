@@ -1,17 +1,14 @@
 package com.ciet.demo_learn.enums;
 
-public enum Role {
+public enum EvaluatorType {
 
-    COLABORADOR("Colaborador"),
+    SELF("Self"),
     PDM("PDM"),
-    CALIBRADOR("Calibrador"),
-    BP("Business Partner"),
-    ADMIN("Admin"),
-    GOVERNANCA("Governança");
+    PEER("Peer");
 
     public final String descrition;
 
-    Role(String descrition) {
+    EvaluatorType(String descrition) {
         this.descrition = descrition;
     }
 

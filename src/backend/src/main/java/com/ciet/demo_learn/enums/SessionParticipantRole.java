@@ -1,17 +1,15 @@
 package com.ciet.demo_learn.enums;
 
-public enum Role {
+public enum SessionParticipantRole {
 
-    COLABORADOR("Colaborador"),
     PDM("PDM"),
     CALIBRADOR("Calibrador"),
     BP("Business Partner"),
-    ADMIN("Admin"),
     GOVERNANCA("Governança");
 
     public final String descrition;
 
-    Role(String descrition) {
+    SessionParticipantRole(String descrition) {
         this.descrition = descrition;
     }
 
