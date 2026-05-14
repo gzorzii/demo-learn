@@ -34,7 +34,7 @@ public class AuthService {
     public String login(String email) {
         var user = userRepository.findByEmailWithPermissions(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
         List<String> permissions = user.getUserPermissions().stream()
-                .map(up -> up.getPermission().getDescription())
+                .map(up -> up.getPermission().name())
                 .toList();
         if (permissions.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
@@ -67,7 +67,7 @@ public class AuthService {
         var user = userRepository.findByEmailWithPermissions(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
         List<String> permissions = user.getUserPermissions().stream()
-                .map(up -> up.getPermission().getDescription())
+                .map(up -> up.getPermission().name())
                 .toList();
         if (permissions.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);

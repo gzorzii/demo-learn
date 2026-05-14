@@ -7,5 +7,6 @@ public record AuthenticatedUser(
         UUID id,
         String name,
         String email,
-        List<String> roles
+        List<String> roles,
+        String picture
 ) {}

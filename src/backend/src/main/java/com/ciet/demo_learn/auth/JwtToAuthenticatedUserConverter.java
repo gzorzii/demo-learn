@@ -25,7 +25,8 @@ public class JwtToAuthenticatedUserConverter implements Converter<Jwt, UsernameP
                 UUID.fromString(jwt.getSubject()),
                 jwt.getClaimAsString("name"),
                 jwt.getClaimAsString("email"),
-                roles
+                roles,
+                jwt.getClaimAsString("picture")
         );
         return new UsernamePasswordAuthenticationToken(user, null, authorities);
     }
