@@ -331,6 +331,7 @@ erDiagram
     uuid calibrator_user_id FK
     timestamptz scheduled_at
     timestamptz started_at
+    timestamptz paused_at
     timestamptz closed_at
     text status
     timestamptz created_at
@@ -365,6 +366,7 @@ erDiagram
     integer d3_score_final
     uuid closed_by FK
     timestamptz closed_at
+    timestamptz last_saved_at
     text status
     timestamptz created_at
     timestamptz updated_at
@@ -582,8 +584,11 @@ CHECK (allocation_model IN ('TEAM','STAFF_AUG','SDLC'))
 -- pr_pdm_assessment.score_adjustment
 CHECK (score_adjustment IN (-1, 0, 1))
 
--- calibration_session.status / calibration_item.status
-CHECK (status IN ('SCHEDULED','IN_PROGRESS','CLOSED'))
+-- calibration_session.status
+CHECK (status IN ('SCHEDULED','IN_PROGRESS','PAUSED','CLOSED'))
+
+-- calibration_item.status
+CHECK (status IN ('PENDING','DRAFT','CONFIRMED'))
 
 -- pr_debriefing.status
 CHECK (status IN ('PENDING','SCHEDULED','CONDUCTED'))

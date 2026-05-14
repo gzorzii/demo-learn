@@ -24,9 +24,13 @@ Prover ao Calibrador e ao BP um dashboard de calibração onde a sessão é cond
 - (Regra 30) Scores decididos na calibração são o resultado final do ciclo PR.
 - (Regra 26) Calibrador tem acesso exclusivo ao campo de score final; BP tem visão agregada sem poder de edição de score.
 - (Regra 2) Nine Box: eixo Y = D1; eixo X = D2 + D3.
+- (Regra 32) Sessão pode ser pausada a qualquer momento durante execução e retomada em outro momento; scores parciais preservados.
+- (Regra 33) Scores preenchidos pelo Calibrador são salvos como rascunho (`DRAFT`) até confirmação explícita por item; itens confirmados ficam imutáveis.
+- (Regra 34) Ao retomar sessão pausada, itens confirmados permanecem travados; itens em rascunho ficam editáveis.
+- (Regra 35) Apenas o Calibrador pode confirmar itens.
+- (Regra 36) Sessão só pode ser fechada quando todos os itens estão confirmados.
+- (Regra 37) PDM, BP e Governança têm visão somente leitura de rascunhos e itens confirmados.
 - O dashboard exibe para cada colaborador da sessão: posicionamento no Nine Box proposto pelo PDM, comentários por dimensão, prework do PDM e autoavaliação.
-- O Calibrador pode reposicionar o colaborador no Nine Box alterando os scores finais.
-- Cada alteração de score pelo Calibrador é registrada com justificativa (a confirmar: justificativa obrigatória para alterações do Calibrador?).
 - O score final definido na sessão substitui o score proposto pelo PDM.
 
 ---
@@ -63,6 +67,22 @@ Quando fecha a sessão
 Então os scores finais são registrados como resultado oficial do PR de cada colaborador
 E a sessão é marcada como concluída
 E os PDMs são notificados para conduzir as devolutivas
+
+Dado que o Calibrador está conduzindo uma sessão em andamento
+Quando pausa a sessão
+Então a sessão vai para o estado PAUSED
+E todos os scores em rascunho são preservados
+
+Dado que uma sessão está pausada
+Quando o Calibrador a retoma
+Então a sessão volta para IN_PROGRESS
+E itens confirmados permanecem travados
+E itens em rascunho ficam editáveis
+
+Dado que há itens não confirmados na sessão
+Quando o Calibrador tenta fechar a sessão
+Então o sistema bloqueia o fechamento
+E indica quais colaboradores ainda não foram confirmados
 ```
 
 ---
@@ -100,13 +120,17 @@ E os PDMs são notificados para conduzir as devolutivas
 /  (Shell principal — 002.menu-navegacao)
   └── /calibracao  ← entrada pelo menu lateral (perfil Calibrador / BP)
         ├── [lista de sessões agendadas e concluídas]
-        └── [sessão agendada] → /calibracao/sessao/:id
-              ├── [lista de colaboradores da sessão com Nine Box proposto]
+        └── [sessão agendada/pausada] → /calibracao/sessao/:id
+              ├── [lista de colaboradores: PENDING / DRAFT / CONFIRMED]
+              ├── [Calibrador: pausar sessão] → status PAUSED → /calibracao
+              ├── [Calibrador: retomar sessão PAUSED] → status IN_PROGRESS
               └── [selecionar colaborador] → /calibracao/sessao/:id/:colaboradorId
                     ├── [visualizar: Nine Box, comentários PDM, prework, autoavaliação]
-                    ├── [Calibrador: editar score final] → Nine Box atualizado
+                    ├── [Calibrador: editar score final] → salvo como DRAFT
+                    ├── [Calibrador: confirmar item] → status CONFIRMED (travado)
                     └── [voltar] → /calibracao/sessao/:id
-              └── [Calibrador: fechar sessão] → scores finais registrados → /calibracao
+              └── [Calibrador: fechar sessão — só quando todos CONFIRMED]
+                    → scores finais registrados → /calibracao
 ```
 
 ### Entrada na navegação
