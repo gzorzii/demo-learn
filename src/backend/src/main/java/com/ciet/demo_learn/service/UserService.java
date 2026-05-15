@@ -31,4 +31,16 @@ public class UserService {
     public Optional<User> findById(UUID userId) {
         return userRepository.findById(userId);
     }
+
+    public Optional<UUID> findPdmIdByUserId(UUID userId) {
+        return userRepository.findPdmIdByUserId(userId);
+    }
+
+    public List<User> searchByNameOrEmail(String term) {
+        return userRepository.searchByNameOrEmail(term);
+    }
+
+    public List<User> findActiveByPdmIdExcluding(UUID pdmId, List<UUID> excludedIds) {
+        return userRepository.findActiveByPdmIdExcluding(pdmId, excludedIds);
+    }
 }

@@ -6,7 +6,9 @@ import com.ciet.demo_learn.repository.CycleSubjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,5 +36,13 @@ public class CycleSubjectService {
     @Transactional
     public CycleSubject save(CycleSubject cs) {
         return cycleSubjectRepository.save(cs);
+    }
+
+    public Optional<CycleSubject> findByIdAndSubjectUserId(UUID id, UUID subjectUserId) {
+        return cycleSubjectRepository.findByIdAndSubjectUserIdAndDeletedAtIsNull(id, subjectUserId);
+    }
+
+    public List<CycleSubject> findAllExpiredValidations(Instant now) {
+        return cycleSubjectRepository.findAllExpiredValidations(now);
     }
 }

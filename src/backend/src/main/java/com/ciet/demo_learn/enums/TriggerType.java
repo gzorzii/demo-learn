@@ -5,7 +5,8 @@ public enum TriggerType {
     QUARTERLY_AUTO("Quarterly Automatic"),
     EVENT("Event"),
     MANUAL_PDM("Manual PDM"),
-    MANUAL_SUBJECT("Manual Subject");
+    MANUAL_SUBJECT("Manual Subject"),
+    MANUAL_COLLABORATOR("Manual Collaborator");
 
     public final String description;
 

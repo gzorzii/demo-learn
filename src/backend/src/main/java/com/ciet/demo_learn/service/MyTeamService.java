@@ -6,6 +6,7 @@ import com.ciet.demo_learn.dto.TeamMemberDto;
 import com.ciet.demo_learn.dto.TeamMembersResponse;
 import com.ciet.demo_learn.enums.CycleStatus;
 import com.ciet.demo_learn.enums.CycleType;
+import com.ciet.demo_learn.enums.EvaluatorSource;
 import com.ciet.demo_learn.enums.EvaluatorStatus;
 import com.ciet.demo_learn.enums.EvaluatorType;
 import com.ciet.demo_learn.enums.TriggerType;
@@ -35,6 +36,7 @@ public class MyTeamService {
     private final CycleBlackoutService cycleBlackoutService;
     private final CycleService cycleService;
     private final CycleEvaluatorService cycleEvaluatorService;
+    private final OnaService onaService;
     private final NotificationService notificationService;
 
     public MyTeamService(
@@ -43,12 +45,14 @@ public class MyTeamService {
             CycleBlackoutService cycleBlackoutService,
             CycleService cycleService,
             CycleEvaluatorService cycleEvaluatorService,
+            OnaService onaService,
             NotificationService notificationService) {
         this.userService = userService;
         this.cycleSubjectService = cycleSubjectService;
         this.cycleBlackoutService = cycleBlackoutService;
         this.cycleService = cycleService;
         this.cycleEvaluatorService = cycleEvaluatorService;
+        this.onaService = onaService;
         this.notificationService = notificationService;
     }
 
@@ -86,9 +90,7 @@ public class MyTeamService {
         Cycle cycle = new Cycle();
         cycle.setCycleType(CycleType.CF);
         cycle.setTriggerType(TriggerType.MANUAL_PDM);
-        cycle.setStatus(CycleStatus.COLLECTING);
-        cycle.setCollectionStartAt(now);
-        cycle.setCollectionDeadline(now.plus(10, ChronoUnit.DAYS));
+        cycle.setStatus(CycleStatus.VALIDATING_EVALUATORS);
         cycle.setYear(LocalDate.now().getYear());
         cycle.setQuarter(null);
         cycle.setIsBlackout(false);
@@ -98,8 +100,8 @@ public class MyTeamService {
         CycleSubject cycleSubject = new CycleSubject();
         cycleSubject.setCycle(savedCycle);
         cycleSubject.setSubjectUser(subject);
-        cycleSubject.setStatus("COLLECTING");
-        cycleSubject.setCollectionStartAt(now);
+        cycleSubject.setStatus("VALIDATING_EVALUATORS");
+        cycleSubject.setValidationDeadline(now.plus(7, ChronoUnit.DAYS));
         CycleSubject savedCycleSubject = cycleSubjectService.save(cycleSubject);
 
         User pdmUser = userService.findById(pdmId)
@@ -111,6 +113,7 @@ public class MyTeamService {
         selfEvaluator.setEvaluatorType(EvaluatorType.SELF);
         selfEvaluator.setIsMandatory(true);
         selfEvaluator.setStatus(EvaluatorStatus.PENDING);
+        selfEvaluator.setSource(EvaluatorSource.ONA_SUGGESTION);
         cycleEvaluatorService.save(selfEvaluator);
 
         CycleEvaluator pdmEvaluator = new CycleEvaluator();
@@ -119,7 +122,10 @@ public class MyTeamService {
         pdmEvaluator.setEvaluatorType(EvaluatorType.PDM);
         pdmEvaluator.setIsMandatory(true);
         pdmEvaluator.setStatus(EvaluatorStatus.PENDING);
+        pdmEvaluator.setSource(EvaluatorSource.ONA_SUGGESTION);
         cycleEvaluatorService.save(pdmEvaluator);
+
+        onaService.suggestAndCreateEvaluators(savedCycleSubject, subjectUserId, pdmId);
 
         notificationService.notifyNewCycle(subjectUserId, savedCycle.getId());
     }

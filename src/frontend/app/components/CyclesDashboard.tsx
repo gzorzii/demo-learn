@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { fetchActiveCycles } from '../services/cycleService';
-import type { ActiveCycleDTO } from '../types/cycle';
+import type { ActiveCycleDTO, SelfEligibilityStatus, SelfImpedimentCode } from '../types/cycle';
 import { ActiveCyclesEmptyState } from './ActiveCyclesEmptyState';
 import { Button } from './ui/button';
 import { CycleCard } from './CycleCard';
 import { CycleCardSkeleton } from './CycleCardSkeleton';
 
 type CyclesDashboardProps = {
-  // TODO: quando o endpoint GET /api/ciclos/ativos/{userId} existir para o PDM,
-  // trocar a chamada de fetchActiveCycles() por fetchActiveCyclesForUser(userId)
   userId?: string;
+  refreshKey?: number;
+  onStartCf?: () => void;
+  lastImpediment?: SelfImpedimentCode | null;
+  blackoutEndsAt?: string | null;
 };
 
 type FetchState =
@@ -17,7 +19,22 @@ type FetchState =
   | { status: 'error'; message: string }
   | { status: 'success'; cycles: ActiveCycleDTO[] };
 
-export function CyclesDashboard(_props: CyclesDashboardProps) {
+function deriveEligibility(cycles: ActiveCycleDTO[]): SelfEligibilityStatus {
+  if (cycles.some(c => c.cycleType === 'CF')) {
+    return { canStartCf: false, impedimentCode: 'CF_ALREADY_ACTIVE' };
+  }
+  if (cycles.some(c => c.cycleType === 'PR')) {
+    return { canStartCf: false, impedimentCode: 'PR_ALREADY_ACTIVE' };
+  }
+  return { canStartCf: true, impedimentCode: null };
+}
+
+export function CyclesDashboard({
+  refreshKey,
+  onStartCf,
+  lastImpediment,
+  blackoutEndsAt,
+}: CyclesDashboardProps) {
   const [state, setState] = useState<FetchState>({ status: 'loading' });
 
   function load() {
@@ -34,7 +51,7 @@ export function CyclesDashboard(_props: CyclesDashboardProps) {
 
   useEffect(() => {
     load();
-  }, []);
+  }, [refreshKey]);
 
   if (state.status === 'loading') {
     return (
@@ -57,7 +74,15 @@ export function CyclesDashboard(_props: CyclesDashboardProps) {
   }
 
   if (state.cycles.length === 0) {
-    return <ActiveCyclesEmptyState />;
+    const eligibility = onStartCf != null ? deriveEligibility(state.cycles) : null;
+    return (
+      <ActiveCyclesEmptyState
+        eligibility={eligibility}
+        onStartCf={onStartCf}
+        lastImpediment={lastImpediment}
+        blackoutEndsAt={blackoutEndsAt}
+      />
+    );
   }
 
   return (

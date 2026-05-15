@@ -14,4 +14,8 @@ public class NotificationService {
     public void notifyNewCycle(UUID subjectUserId, UUID cycleId) {
         log.info("New cycle notification: subjectUserId={}, cycleId={}", subjectUserId, cycleId);
     }
+
+    public void notifyEvaluatorsSelected(UUID cycleSubjectId) {
+        log.info("Evaluators selected for cycleSubjectId={}", cycleSubjectId);
+    }
 }

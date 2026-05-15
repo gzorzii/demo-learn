@@ -7,6 +7,7 @@ import { MeuTimePage } from './pages/MeuTimePage';
 import { CalibracaoPage } from './pages/CalibracaoPage';
 import { AdminPage } from './pages/AdminPage';
 import { AccessDeniedPage } from './pages/AccessDeniedPage';
+import { CfEvaluatorsPage } from './pages/CfEvaluatorsPage';
 
 export const router = createBrowserRouter([
   { path: '/login', Component: LoginPage },
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
           { path: 'calibracao', Component: CalibracaoPage },
           { path: 'admin', Component: AdminPage },
           { path: 'acesso-negado', Component: AccessDeniedPage },
+          { path: 'ciclos/cf/:id/avaliadores', Component: CfEvaluatorsPage },
         ],
       },
     ],

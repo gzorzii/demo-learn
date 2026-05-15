@@ -1,3 +1,18 @@
+export type SelfImpedimentCode =
+  | 'CF_ALREADY_ACTIVE'
+  | 'PR_ALREADY_ACTIVE'
+  | 'BLACKOUT_ACTIVE';
+
+export type SelfEligibilityStatus = {
+  canStartCf: boolean;
+  impedimentCode: SelfImpedimentCode | null;
+};
+
+export type StartCfErrorResponse = {
+  errorCode: SelfImpedimentCode;
+  blackoutEndsAt?: string | null;
+};
+
 export type ActiveCycleDTO = {
   cycleSubjectId: string;
   cycleId: string;

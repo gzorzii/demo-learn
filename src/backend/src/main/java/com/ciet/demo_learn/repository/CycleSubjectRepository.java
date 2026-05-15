@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface CycleSubjectRepository extends JpaRepository<CycleSubject, UUID> {
@@ -43,4 +45,16 @@ public interface CycleSubjectRepository extends JpaRepository<CycleSubject, UUID
             AND c.deletedAt IS NULL
             """)
     boolean existsActivePrBySubjectUserId(@Param("userId") UUID userId);
+
+    @Query("SELECT cs FROM CycleSubject cs JOIN FETCH cs.cycle WHERE cs.id = :id AND cs.subjectUser.id = :subjectUserId AND cs.deletedAt IS NULL")
+    Optional<CycleSubject> findByIdAndSubjectUserIdAndDeletedAtIsNull(@Param("id") UUID id, @Param("subjectUserId") UUID subjectUserId);
+
+    @Query("""
+            SELECT cs FROM CycleSubject cs JOIN FETCH cs.cycle
+            WHERE cs.status = 'VALIDATING_EVALUATORS'
+              AND cs.validationDeadline <= :now
+              AND cs.deletedAt IS NULL
+              AND cs.closedAt IS NULL
+            """)
+    List<CycleSubject> findAllExpiredValidations(@Param("now") Instant now);
 }

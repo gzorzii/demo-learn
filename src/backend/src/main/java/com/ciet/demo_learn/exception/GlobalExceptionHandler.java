@@ -13,6 +13,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CfConflictException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public CfConflictResponse handleCfConflict(CfConflictException ex) {
-        return new CfConflictResponse(ex.getErrorCode());
+        return new CfConflictResponse(ex.getErrorCode(), ex.getBlackoutEndsAt());
     }
 }

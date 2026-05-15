@@ -7,4 +7,7 @@
 
     <include file="db/changelog/changes/001-initial-schema.sql"/>
     <include file="db/changelog/changes/002-domain-schema.sql"/>
+    <include file="db/changelog/changes/003-seed-test-data.sql"/>
+    <include file="db/changelog/changes/004-update-trigger-type-constraint.sql"/>
+    <include file="db/changelog/changes/005-feature-008-schema.sql"/>
 </databaseChangeLog>

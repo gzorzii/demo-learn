@@ -1,5 +1,6 @@
 package com.ciet.demo_learn.model;
 
+import com.ciet.demo_learn.enums.EvaluatorSource;
 import com.ciet.demo_learn.enums.EvaluatorStatus;
 import com.ciet.demo_learn.enums.EvaluatorType;
 import jakarta.persistence.Column;
@@ -38,6 +39,14 @@ public class CycleEvaluator extends BaseEntity {
 
     @Column(name = "responded_at")
     private Instant respondedAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "source", nullable = false)
+    private EvaluatorSource source;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "added_by")
+    private User addedBy;
 
     @Column(name = "deleted_at")
     private Instant deletedAt;
@@ -88,6 +97,22 @@ public class CycleEvaluator extends BaseEntity {
 
     public void setRespondedAt(Instant respondedAt) {
         this.respondedAt = respondedAt;
+    }
+
+    public EvaluatorSource getSource() {
+        return source;
+    }
+
+    public void setSource(EvaluatorSource source) {
+        this.source = source;
+    }
+
+    public User getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(User addedBy) {
+        this.addedBy = addedBy;
     }
 
     public Instant getDeletedAt() {

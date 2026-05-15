@@ -1,9 +1,11 @@
+import { Link } from 'react-router';
 import { Badge } from './ui/badge';
 import { Card, CardContent, CardHeader } from './ui/card';
 import { Progress } from './ui/progress';
 
 const PHASE_LABELS: Record<string, string> = {
   PENDING: 'Aguardando início',
+  VALIDATING_EVALUATORS: 'Validando avaliadores',
   COLLECTING: 'Coletando respostas',
   READY_FOR_CALIBRATION: 'Pronto para calibração',
   CALIBRATED: 'Calibrado',
@@ -39,6 +41,7 @@ function DeadlineBadge({ daysRemaining }: { daysRemaining: number | null }) {
 }
 
 export function CycleCard({
+  cycleSubjectId,
   cycleType,
   cycleName,
   currentPhase,
@@ -78,6 +81,15 @@ export function CycleCard({
           Fase atual:{' '}
           <span className="font-medium text-gray-700">{phaseLabel}</span>
         </p>
+        {currentPhase === 'VALIDATING_EVALUATORS' && (
+          <Link
+            to={`/ciclos/cf/${cycleSubjectId}/avaliadores`}
+            className="inline-flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-white border-0 w-fit"
+            style={{ backgroundColor: '#FF7C6B' }}
+          >
+            Validar avaliadores
+          </Link>
+        )}
         <div className="flex flex-col gap-1">
           <div className="flex justify-between text-xs text-gray-500">
             <span>Respostas recebidas</span>

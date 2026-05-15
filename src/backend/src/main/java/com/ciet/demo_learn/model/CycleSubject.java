@@ -39,6 +39,9 @@ public class CycleSubject extends BaseEntity {
     @Column(name = "validation_deadline")
     private Instant validationDeadline;
 
+    @Column(name = "validated_at")
+    private Instant validatedAt;
+
     @Column(name = "collection_start_at")
     private Instant collectionStartAt;
 
@@ -100,6 +103,14 @@ public class CycleSubject extends BaseEntity {
 
     public void setValidationDeadline(Instant validationDeadline) {
         this.validationDeadline = validationDeadline;
+    }
+
+    public Instant getValidatedAt() {
+        return validatedAt;
+    }
+
+    public void setValidatedAt(Instant validatedAt) {
+        this.validatedAt = validatedAt;
     }
 
     public Instant getCollectionStartAt() {

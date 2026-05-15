@@ -5,3 +5,7 @@ export async function fetchActiveCycles(): Promise<ActiveCyclesResponse> {
   const res = await api.get<ActiveCyclesResponse>('/api/me/cycles/active');
   return res.data;
 }
+
+export async function startSelfCf(): Promise<void> {
+  await api.post('/api/me/cycles/cf');
+}
