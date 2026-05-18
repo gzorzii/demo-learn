@@ -8,6 +8,12 @@ import { CalibracaoPage } from './pages/CalibracaoPage';
 import { AdminPage } from './pages/AdminPage';
 import { AccessDeniedPage } from './pages/AccessDeniedPage';
 import { CfEvaluatorsPage } from './pages/CfEvaluatorsPage';
+import { CfEvaluationFormPage } from './pages/CfEvaluationFormPage';
+import { CfEvaluationConfirmationPage } from './pages/CfEvaluationConfirmationPage';
+import { CfSelfEvaluationPage } from './pages/CfSelfEvaluationPage';
+import { PdmCfEvaluationPage } from './pages/PdmCfEvaluationPage';
+import { CfProgressPage } from './pages/CfProgressPage';
+import { PdmCfProgressPage } from './pages/PdmCfProgressPage';
 
 export const router = createBrowserRouter([
   { path: '/login', Component: LoginPage },
@@ -24,6 +30,12 @@ export const router = createBrowserRouter([
           { path: 'admin', Component: AdminPage },
           { path: 'acesso-negado', Component: AccessDeniedPage },
           { path: 'ciclos/cf/:id/avaliadores', Component: CfEvaluatorsPage },
+          { path: 'avaliar/cf/:evaluatorId', Component: CfEvaluationFormPage },
+          { path: 'avaliar/cf/:evaluatorId/confirmacao', Component: CfEvaluationConfirmationPage },
+          { path: 'ciclos/cf/:id/autoavaliacao', Component: CfSelfEvaluationPage },
+          { path: 'ciclos/cf/:id', Component: CfProgressPage },
+          { path: 'meu-time/:colaboradorId/cf/:id/avaliar', Component: PdmCfEvaluationPage },
+          { path: 'meu-time/:colaboradorId/cf/:id', Component: PdmCfProgressPage },
         ],
       },
     ],

@@ -32,6 +32,9 @@ public class CycleSubject extends BaseEntity {
     @Column(name = "status", nullable = false)
     private String status;
 
+    @Column(name = "self_evaluation_status", nullable = false)
+    private String selfEvaluationStatus;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "allocation_model")
     private AllocationModel allocationModel;
@@ -87,6 +90,14 @@ public class CycleSubject extends BaseEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getSelfEvaluationStatus() {
+        return selfEvaluationStatus;
+    }
+
+    public void setSelfEvaluationStatus(String selfEvaluationStatus) {
+        this.selfEvaluationStatus = selfEvaluationStatus;
     }
 
     public AllocationModel getAllocationModel() {

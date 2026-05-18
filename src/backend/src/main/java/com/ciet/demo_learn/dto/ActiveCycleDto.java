@@ -12,5 +12,6 @@ public record ActiveCycleDto(
         Integer daysRemaining,
         double responseRate,
         int totalEvaluators,
-        int respondedEvaluators
+        int respondedEvaluators,
+        String selfEvaluationStatus
 ) {}

@@ -20,13 +20,15 @@ public interface CycleMapper {
     @Mapping(target = "responseRate", source = "responseRate")
     @Mapping(target = "totalEvaluators", source = "totalEvaluators")
     @Mapping(target = "respondedEvaluators", source = "respondedEvaluators")
+    @Mapping(target = "selfEvaluationStatus", source = "selfEvaluationStatus")
     ActiveCycleDto toDto(
             CycleSubject cs,
             String collectionDeadline,
             Integer daysRemaining,
             double responseRate,
             int totalEvaluators,
-            int respondedEvaluators
+            int respondedEvaluators,
+            String selfEvaluationStatus
     );
 
     @Named("cycleTypeToString")

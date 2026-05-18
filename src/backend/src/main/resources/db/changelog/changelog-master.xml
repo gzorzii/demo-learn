@@ -10,4 +10,7 @@
     <include file="db/changelog/changes/003-seed-test-data.sql"/>
     <include file="db/changelog/changes/004-update-trigger-type-constraint.sql"/>
     <include file="db/changelog/changes/005-feature-008-schema.sql"/>
+    <include file="db/changelog/changes/006-feature-009-schema.sql"/>
+    <include file="db/changelog/changes/007-feature-010-schema.sql"/>
+    <include file="db/changelog/changes/008-feature-011-schema.sql"/>
 </databaseChangeLog>

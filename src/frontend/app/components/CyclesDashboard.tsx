@@ -99,6 +99,7 @@ export function CyclesDashboard({
           responseRate={cycle.responseRate}
           totalEvaluators={cycle.totalEvaluators}
           respondedEvaluators={cycle.respondedEvaluators}
+          selfEvaluationStatus={cycle.selfEvaluationStatus}
         />
       ))}
     </div>

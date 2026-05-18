@@ -1,6 +1,7 @@
 export type ActiveCycleSummary = {
   cycleType: 'CF' | 'PR';
   cycleStatus: string;
+  cycleSubjectId: string | null;
 };
 
 export type EligibilityStatus = {

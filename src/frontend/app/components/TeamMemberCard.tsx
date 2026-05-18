@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader } from './ui/card';
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export function TeamMemberCard({
+  userId,
   name,
   email,
   activeCycle,
@@ -56,7 +58,7 @@ export function TeamMemberCard({
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-2 pb-5">
-        <div>
+        <div className="flex flex-wrap gap-2">
           <Button
             disabled={!eligibility.canStartCf}
             title={impedimentLabel}
@@ -66,6 +68,17 @@ export function TeamMemberCard({
           >
             Iniciar CF
           </Button>
+          {activeCycle?.cycleType === 'CF' &&
+            activeCycle?.cycleStatus === 'COLLECTING' &&
+            activeCycle?.cycleSubjectId && (
+              <Link
+                to={`/meu-time/${userId}/cf/${activeCycle.cycleSubjectId}`}
+                className="inline-flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-white border-0 w-fit"
+                style={{ backgroundColor: '#FF7C6B' }}
+              >
+                Avaliar CF
+              </Link>
+            )}
         </div>
         {errorLabel && (
           <p className="text-sm text-red-600">{errorLabel}</p>

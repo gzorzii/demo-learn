@@ -138,7 +138,8 @@ public class MyTeamService {
                 .findFirst()
                 .map(cs -> new ActiveCycleSummaryDto(
                         cs.getCycle().getCycleType().name(),
-                        cs.getStatus()))
+                        cs.getStatus(),
+                        cs.getId()))
                 .orElse(null);
 
         EligibilityStatusDto eligibility = resolveEligibility(userId);

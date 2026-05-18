@@ -22,6 +22,7 @@ type CycleCardProps = {
   responseRate: number;
   totalEvaluators: number;
   respondedEvaluators: number;
+  selfEvaluationStatus: string;
 };
 
 function DeadlineBadge({ daysRemaining }: { daysRemaining: number | null }) {
@@ -49,6 +50,7 @@ export function CycleCard({
   responseRate,
   totalEvaluators,
   respondedEvaluators,
+  selfEvaluationStatus,
 }: CycleCardProps) {
   const isCF = cycleType === 'CF';
   const accentColor = isCF ? '#FF7C6B' : '#2D2A96';
@@ -88,6 +90,15 @@ export function CycleCard({
             style={{ backgroundColor: '#FF7C6B' }}
           >
             Validar avaliadores
+          </Link>
+        )}
+        {currentPhase === 'COLLECTING' && isCF && (
+          <Link
+            to={`/ciclos/cf/${cycleSubjectId}`}
+            className="inline-flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-white border-0 w-fit"
+            style={{ backgroundColor: '#FF7C6B' }}
+          >
+            {selfEvaluationStatus === 'SUBMITTED' ? 'Ver autoavaliação' : 'Autoavaliação'}
           </Link>
         )}
         <div className="flex flex-col gap-1">

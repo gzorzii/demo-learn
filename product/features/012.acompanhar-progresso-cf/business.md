@@ -25,7 +25,7 @@ Permitir que o colaborador e o PDM acompanhem em tempo real o progresso das resp
 - (Regra 15) Respostas individuais de convidados são anônimas para o colaborador (mínimo 3 respondentes para exibição); o progresso mostra contagem agregada, não identidades individuais.
 - A tela exibe: número de respostas recebidas vs. total de avaliadores, status dos obrigatórios (self, PDM) e prazo restante em dias.
 - Nomes de convidados que responderam ou não responderam não são exibidos individualmente ao colaborador — apenas contagem.
-- O PDM pode ver o progresso individual por avaliador (a confirmar: visibilidade de nomes para o PDM).
+- O PDM pode ver o nome individual de cada convidado e se ele respondeu ou não.
 
 ---
 
@@ -100,5 +100,5 @@ A tela de progresso do CF é acessada clicando no card do ciclo ativo em `/ciclo
 
 ## Questões em aberto
 
-- O PDM pode ver o nome individual de cada convidado que respondeu ou não, ou apenas a contagem agregada (igual ao colaborador)?
-- A visibilidade definida como "TBD" no flows.md (notas por pilar e texto 360 antes da calibração) impacta o que o colaborador vê nesta tela?
+- ~~O PDM pode ver o nome individual de cada convidado que respondeu ou não, ou apenas a contagem agregada (igual ao colaborador)?~~ **Resolvido:** o PDM vê nome individual e status de cada convidado.
+- ~~A visibilidade definida como "TBD" no flows.md impacta o que o colaborador vê nesta tela?~~ **Resolvido:** não impacta — esta tela exibe apenas contagens de progresso, sem conteúdo das respostas. A regra TBD de visibilidade de conteúdo é relevante para a feature 014.

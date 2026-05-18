@@ -57,7 +57,7 @@ public class CycleService {
                 : null;
 
         return cycleMapper.toDto(cs, collectionDeadline, resolveDaysRemaining(deadlineInstant),
-                responseRate, (int) total, (int) responded);
+                responseRate, (int) total, (int) responded, cs.getSelfEvaluationStatus());
     }
 
     private Integer resolveDaysRemaining(Instant deadline) {

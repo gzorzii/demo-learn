@@ -24,6 +24,7 @@ export type ActiveCycleDTO = {
   responseRate: number;
   totalEvaluators: number;
   respondedEvaluators: number;
+  selfEvaluationStatus: string;
 };
 
 export type ActiveCyclesResponse = {

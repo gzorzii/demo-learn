@@ -18,4 +18,12 @@ public class NotificationService {
     public void notifyEvaluatorsSelected(UUID cycleSubjectId) {
         log.info("Evaluators selected for cycleSubjectId={}", cycleSubjectId);
     }
+
+    public void notifyEvaluationSubmitted(UUID cycleEvaluatorId) {
+        log.info("Notificação: avaliação submetida. cycleEvaluatorId={}", cycleEvaluatorId);
+    }
+
+    public void notifyPdmEvaluationSubmitted(UUID cycleEvaluatorId) {
+        log.info("PDM evaluation submitted: cycleEvaluatorId={}", cycleEvaluatorId);
+    }
 }

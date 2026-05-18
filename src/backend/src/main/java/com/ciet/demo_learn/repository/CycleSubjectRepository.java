@@ -46,7 +46,7 @@ public interface CycleSubjectRepository extends JpaRepository<CycleSubject, UUID
             """)
     boolean existsActivePrBySubjectUserId(@Param("userId") UUID userId);
 
-    @Query("SELECT cs FROM CycleSubject cs JOIN FETCH cs.cycle WHERE cs.id = :id AND cs.subjectUser.id = :subjectUserId AND cs.deletedAt IS NULL")
+    @Query("SELECT cs FROM CycleSubject cs JOIN FETCH cs.cycle JOIN FETCH cs.subjectUser WHERE cs.id = :id AND cs.subjectUser.id = :subjectUserId AND cs.deletedAt IS NULL")
     Optional<CycleSubject> findByIdAndSubjectUserIdAndDeletedAtIsNull(@Param("id") UUID id, @Param("subjectUserId") UUID subjectUserId);
 
     @Query("""
@@ -57,4 +57,7 @@ public interface CycleSubjectRepository extends JpaRepository<CycleSubject, UUID
               AND cs.closedAt IS NULL
             """)
     List<CycleSubject> findAllExpiredValidations(@Param("now") Instant now);
+
+    @Query("SELECT cs FROM CycleSubject cs JOIN FETCH cs.cycle JOIN FETCH cs.subjectUser WHERE cs.id = :id AND cs.deletedAt IS NULL")
+    Optional<CycleSubject> findByIdWithCycleAndSubjectUser(@Param("id") UUID id);
 }

@@ -1,5 +1,6 @@
 package com.ciet.demo_learn.repository;
 
+import com.ciet.demo_learn.enums.EvaluatorType;
 import com.ciet.demo_learn.model.CycleEvaluator;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,4 +34,52 @@ public interface CycleEvaluatorRepository extends JpaRepository<CycleEvaluator, 
 
     @Query("SELECT ce FROM CycleEvaluator ce WHERE ce.id = :id AND ce.cycleSubject.id = :cycleSubjectId AND ce.deletedAt IS NULL")
     Optional<CycleEvaluator> findByIdAndCycleSubjectIdAndDeletedAtIsNull(@Param("id") UUID id, @Param("cycleSubjectId") UUID cycleSubjectId);
+
+    @Query("""
+            SELECT ce FROM CycleEvaluator ce
+            JOIN FETCH ce.cycleSubject cs
+            JOIN FETCH cs.subjectUser su
+            JOIN FETCH cs.cycle c
+            WHERE ce.evaluatorUser.id = :userId
+            AND ce.status = com.ciet.demo_learn.enums.EvaluatorStatus.PENDING
+            AND ce.deletedAt IS NULL
+            AND cs.deletedAt IS NULL
+            AND cs.status = 'COLLECTING'
+            AND c.deletedAt IS NULL
+            """)
+    List<CycleEvaluator> findPendingByEvaluatorUserId(@Param("userId") UUID userId);
+
+    @Query("""
+            SELECT ce FROM CycleEvaluator ce
+            JOIN FETCH ce.cycleSubject cs
+            JOIN FETCH cs.subjectUser su
+            JOIN FETCH cs.cycle c
+            WHERE ce.id = :id
+            AND ce.evaluatorUser.id = :evaluatorUserId
+            AND ce.deletedAt IS NULL
+            """)
+    Optional<CycleEvaluator> findByIdAndEvaluatorUserIdAndDeletedAtIsNull(@Param("id") UUID id, @Param("evaluatorUserId") UUID evaluatorUserId);
+
+    @Query("""
+            SELECT ce FROM CycleEvaluator ce
+            JOIN FETCH ce.cycleSubject cs
+            JOIN FETCH cs.cycle c
+            JOIN FETCH cs.subjectUser su
+            WHERE ce.cycleSubject.id = :cycleSubjectId
+            AND ce.evaluatorUser.id = :evaluatorUserId
+            AND ce.evaluatorType = :evaluatorType
+            AND ce.deletedAt IS NULL
+            """)
+    Optional<CycleEvaluator> findPdmEvaluatorByCycleSubjectIdAndEvaluatorUserId(
+            @Param("cycleSubjectId") UUID cycleSubjectId,
+            @Param("evaluatorUserId") UUID evaluatorUserId,
+            @Param("evaluatorType") EvaluatorType evaluatorType);
+
+    @Query("""
+            SELECT ce FROM CycleEvaluator ce
+            JOIN FETCH ce.evaluatorUser u
+            WHERE ce.cycleSubject.id = :cycleSubjectId
+            AND ce.deletedAt IS NULL
+            """)
+    List<CycleEvaluator> findAllWithUserByCycleSubjectId(@Param("cycleSubjectId") UUID cycleSubjectId);
 }
