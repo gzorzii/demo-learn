@@ -12,6 +12,7 @@ export type CfProgressDTO = {
   guestResponded: number;
   collectionDeadline: string | null;
   daysRemaining: number | null;
+  initiatedBy: string | null;
 };
 
 export type PdmCfProgressDTO = CfProgressDTO & {

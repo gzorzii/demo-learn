@@ -11,5 +11,6 @@ public record CfProgressDto(
         int guestTotal,
         int guestResponded,
         Instant collectionDeadline,
-        Integer daysRemaining
+        Integer daysRemaining,
+        String initiatedBy
 ) {}

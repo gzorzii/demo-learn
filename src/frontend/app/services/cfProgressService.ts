@@ -10,3 +10,7 @@ export async function getPdmProgress(colaboradorId: string, cycleSubjectId: stri
   const res = await axios.get(`/api/me/team/${colaboradorId}/cycles/${cycleSubjectId}/progresso`);
   return res.data;
 }
+
+export async function closeCfCycle(cycleSubjectId: string): Promise<void> {
+  await axios.post(`/api/me/ciclos/cf/${cycleSubjectId}/encerrar`);
+}

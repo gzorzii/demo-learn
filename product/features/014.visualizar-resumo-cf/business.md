@@ -24,7 +24,8 @@ Exibir ao colaborador e ao PDM o resumo consolidado de um ciclo de Continuous Fe
 - (Regra 35) Resumo gerado pela IA deve ter aprovação do avaliador antes do registro oficial (tratado em `035`).
 - (Regra 3) Autoavaliação não conta para nota final; é exibida no resumo para contexto.
 - O resumo exibe: avaliação do PDM, autoavaliação da sujeita, sumário das respostas dos convidados (anônimas), e sumário gerado pela IA (quando aprovado — regra 35).
-- A visibilidade das respostas individuais dos convidados para o colaborador é TBD (aguardando decisão de stakeholder — descrito em `description.md`).
+- O colaborador vê as respostas individuais dos convidados sem identificação do autor (anônimas), desde que haja ≥ 3 respondentes (Regra 15). Se houver menos de 3, as respostas não são exibidas individualmente — apenas mensagem informativa.
+- O PDM vê as respostas individuais dos convidados na íntegra: nome do convidado e texto completo de cada resposta.
 - O ciclo deve estar encerrado para que o resumo seja acessível.
 
 ---
@@ -113,5 +114,5 @@ A tela de resumo é acessada automaticamente após o encerramento do ciclo (manu
 
 ## Questões em aberto
 
-- A decisão TBD de `description.md` ("visibilidade de notas por pilar e texto 360 antes da calibração") impacta o que o colaborador vê neste resumo CF? Deve ser confirmado com stakeholder antes da implementação.
-- O PDM pode ver as respostas individuais dos convidados na íntegra, ou vê o mesmo resumo anônimo que o colaborador?
+- ~~A decisão TBD de `description.md` impacta o que o colaborador vê neste resumo CF?~~ **Resolvido:** colaborador vê respostas individuais de convidados sem identificação do autor (≥ 3 respondentes exigidos).
+- ~~O PDM pode ver as respostas individuais dos convidados na íntegra?~~ **Resolvido:** sim, PDM vê nome + texto completo de cada resposta de convidado.

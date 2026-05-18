@@ -69,7 +69,8 @@ public class CfProgressService {
                 guestTotal,
                 guestResponded,
                 cs.getCycle().getCollectionDeadline(),
-                calculateDaysRemaining(cs.getCycle().getCollectionDeadline())
+                calculateDaysRemaining(cs.getCycle().getCollectionDeadline()),
+                cs.getCycle().getTriggerType() != null ? cs.getCycle().getTriggerType().name() : null
         );
     }
 
@@ -126,7 +127,8 @@ public class CfProgressService {
                 guestResponded,
                 cs.getCycle().getCollectionDeadline(),
                 calculateDaysRemaining(cs.getCycle().getCollectionDeadline()),
-                guestEvaluators
+                guestEvaluators,
+                cs.getCycle().getTriggerType() != null ? cs.getCycle().getTriggerType().name() : null
         );
     }
 

@@ -17,6 +17,7 @@ type Props = {
   selfActionUrl: string | null;
   pdmActionUrl: string | null;
   guestEvaluators: GuestEvaluator[] | null;
+  onCloseCycle: (() => void) | null;
 };
 
 function StatusIcon({ done }: { done: boolean }) {
@@ -60,6 +61,7 @@ export function CfProgressPanel({
   selfActionUrl,
   pdmActionUrl,
   guestEvaluators,
+  onCloseCycle,
 }: Props) {
   const isCollecting = cycleStatus === 'COLLECTING';
 
@@ -144,6 +146,18 @@ export function CfProgressPanel({
           <p className="text-sm text-gray-600">{daysRemaining} dias restantes.</p>
         )}
       </section>
+
+      {onCloseCycle !== null && (
+        <div>
+          <button
+            type="button"
+            onClick={onCloseCycle}
+            className="rounded-lg border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 transition hover:bg-red-50"
+          >
+            Encerrar CF
+          </button>
+        </div>
+      )}
     </div>
   );
 }

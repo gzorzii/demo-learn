@@ -26,4 +26,8 @@ public class NotificationService {
     public void notifyPdmEvaluationSubmitted(UUID cycleEvaluatorId) {
         log.info("PDM evaluation submitted: cycleEvaluatorId={}", cycleEvaluatorId);
     }
+
+    public void notifyCfClosedBySubject(UUID cycleSubjectId) {
+        log.info("CF encerrado manualmente pela sujeita: cycleSubjectId={}", cycleSubjectId);
+    }
 }
