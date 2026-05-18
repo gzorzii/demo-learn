@@ -101,6 +101,15 @@ export function CycleCard({
             {selfEvaluationStatus === 'SUBMITTED' ? 'Ver autoavaliação' : 'Autoavaliação'}
           </Link>
         )}
+        {currentPhase === 'CLOSED' && isCF && (
+          <Link
+            to={`/ciclos/cf/${cycleSubjectId}/resumo`}
+            className="inline-flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-white border-0 w-fit"
+            style={{ backgroundColor: '#FF7C6B' }}
+          >
+            Ver resumo
+          </Link>
+        )}
         <div className="flex flex-col gap-1">
           <div className="flex justify-between text-xs text-gray-500">
             <span>Respostas recebidas</span>

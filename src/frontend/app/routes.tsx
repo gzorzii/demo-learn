@@ -14,6 +14,8 @@ import { CfSelfEvaluationPage } from './pages/CfSelfEvaluationPage';
 import { PdmCfEvaluationPage } from './pages/PdmCfEvaluationPage';
 import { CfProgressPage } from './pages/CfProgressPage';
 import { PdmCfProgressPage } from './pages/PdmCfProgressPage';
+import { CfSummaryPage } from './pages/CfSummaryPage';
+import { PdmCfSummaryPage } from './pages/PdmCfSummaryPage';
 
 export const router = createBrowserRouter([
   { path: '/login', Component: LoginPage },
@@ -33,8 +35,10 @@ export const router = createBrowserRouter([
           { path: 'avaliar/cf/:evaluatorId', Component: CfEvaluationFormPage },
           { path: 'avaliar/cf/:evaluatorId/confirmacao', Component: CfEvaluationConfirmationPage },
           { path: 'ciclos/cf/:id/autoavaliacao', Component: CfSelfEvaluationPage },
+          { path: 'ciclos/cf/:id/resumo', Component: CfSummaryPage },
           { path: 'ciclos/cf/:id', Component: CfProgressPage },
           { path: 'meu-time/:colaboradorId/cf/:id/avaliar', Component: PdmCfEvaluationPage },
+          { path: 'meu-time/:colaboradorId/cf/:id/resumo', Component: PdmCfSummaryPage },
           { path: 'meu-time/:colaboradorId/cf/:id', Component: PdmCfProgressPage },
         ],
       },
